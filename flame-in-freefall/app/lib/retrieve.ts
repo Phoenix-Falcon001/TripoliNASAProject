@@ -1,7 +1,8 @@
 import type { Card } from "./types";
 
 // Plain keyword retrieval (no embeddings). Lowercase, split on non-letters/digits,
-// drop stop words, strip a simple plural "s".
+// drop stop words, and cut common word endings so "detected", "detection" and
+// "detect" all match.
 
 const STOP_WORDS = new Set(
   (
@@ -21,7 +22,24 @@ export function tokenize(text: string | null | undefined): string[] {
     .split(/[^a-z0-9.]+/)
     .map((t) => t.replace(/^\.+|\.+$/g, ""))
     .filter((t) => t.length > 1 && !STOP_WORDS.has(t))
-    .map((t) => (t.length > 3 && t.endsWith("s") && !t.endsWith("ss") ? t.slice(0, -1) : t));
+    .map(stem);
+}
+
+const SUFFIXES = ["ations", "ation", "ions", "ion", "ings", "ing", "ed", "s"];
+const MIN_STEM = 4;
+
+/** Very small suffix stripper. Numbers are left alone. */
+export function stem(word: string): string {
+  if (/^[0-9.]+$/.test(word)) return word;
+  let w = word;
+  for (const suf of SUFFIXES) {
+    if (w.endsWith(suf) && w.length - suf.length >= MIN_STEM && !(suf === "s" && w.endsWith("ss"))) {
+      w = w.slice(0, -suf.length);
+      break;
+    }
+  }
+  if (w.endsWith("e") && w.length - 1 >= MIN_STEM) w = w.slice(0, -1);
+  return w;
 }
 
 /** How much a query word counts when found in each field. */

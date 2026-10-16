@@ -120,3 +120,12 @@ describe("loadCardData", () => {
     expect(console.warn).toHaveBeenCalledWith(expect.stringMatching(/S42/));
   });
 });
+
+describe("loadDemoAnswers", () => {
+  it("keeps only answers whose cards are all in the shown set", async () => {
+    const { loadDemoAnswers } = await import("./cards");
+    const all = loadDemoAnswers(path.join(REPO, "data"), new Set(["DEMO-001", "DEMO-006", "DEMO-008"]));
+    expect(all).toHaveLength(2);
+    expect(loadDemoAnswers(path.join(REPO, "data"), new Set(["SAF-001"]))).toEqual([]);
+  });
+});

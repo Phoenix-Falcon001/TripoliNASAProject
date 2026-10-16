@@ -6,6 +6,8 @@ import { cache } from "react";
 import Ajv2020 from "ajv/dist/2020";
 import type { ErrorObject } from "ajv";
 import { parseCsv } from "./csv";
+import { usableDemoAnswers, type DemoAnswer } from "./demoAnswers";
+import { stability } from "./stability";
 import type { Card, Source } from "./types";
 
 /** Repo data folder. The Next.js app runs from app/, so data lives one level up. */
@@ -185,3 +187,29 @@ export const getAiExplanation = cache((cardId: string): string | null => {
   }
   return null;
 });
+
+/** Ranking stability for the shown cards (independent of the user's sliders). */
+export const getStability = cache(() => stability(getCardData().cards));
+
+/**
+ * Pre-written answers from data/demo_answers.json for when Ollama is offline.
+ * Entries citing a card that is not in the current verified (or sample) set are dropped,
+ * so sample answers never appear next to real cards and vice versa.
+ */
+export function loadDemoAnswers(dataDir: string, cardIds: ReadonlySet<string>): DemoAnswer[] {
+  const file = path.join(dataDir, "demo_answers.json");
+  if (!fs.existsSync(file)) return [];
+  try {
+    return usableDemoAnswers(readJson(file), cardIds);
+  } catch (e) {
+    console.error("[cards] demo_answers.json is not valid JSON:", e);
+    return [];
+  }
+}
+
+export const getDemoAnswers = cache(() =>
+  loadDemoAnswers(DATA_DIR, new Set(getCardData().cards.map((c) => c.card_id))),
+);
+
+/** Rows of data/eval/results.csv (G1 accuracy test). Empty if not run yet. */
+export const getEvalResults = cache(() => readCsv(path.join(DATA_DIR, "eval", "results.csv")));

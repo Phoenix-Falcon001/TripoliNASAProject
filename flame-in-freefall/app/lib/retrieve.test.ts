@@ -1,13 +1,26 @@
 import { describe, expect, it } from "vitest";
-import { retrieve, scoreCard, tokenize } from "./retrieve";
+import { retrieve, scoreCard, stem, tokenize } from "./retrieve";
 import { makeCard } from "./testCards";
 
 describe("tokenize", () => {
-  it("lowercases, drops stop words and strips plurals", () => {
-    expect(tokenize("How fast do the Flames spread on Cotton?")).toEqual(["fast", "flame", "spread", "cotton"]);
+  it("lowercases, drops stop words and cuts word endings", () => {
+    expect(tokenize("How fast do the Flames spread on Cotton?")).toEqual(["fast", "flam", "spread", "cotton"]);
+  });
+  it("gives related word forms the same stem", () => {
+    expect(new Set(["detect", "detected", "detection", "detects"].map(stem))).toEqual(new Set(["detect"]));
+    expect(new Set(["ignite", "ignited", "ignition", "ignites"].map(stem))).toEqual(new Set(["ignit"]));
+    expect(new Set(["flame", "flames"].map(stem))).toEqual(new Set(["flam"]));
+    expect(new Set(["burn", "burning", "burned", "burns"].map(stem))).toEqual(new Set(["burn"]));
+    expect(stem("glass")).toBe("glass");
+    expect(stem("fire")).toBe("fire");
+    expect(stem("0.68")).toBe("0.68");
+  });
+  it("matches a question word to a hazard name in another form", () => {
+    const card = makeCard({ hazard: "detection", finding: "Some finding text here." });
+    expect(retrieve([card], "How can a fire be detected?")).toHaveLength(1);
   });
   it("splits snake_case hazards and keeps decimals", () => {
-    expect(tokenize("flame_spread at 0.68 cm/s")).toEqual(["flame", "spread", "0.68", "cm"]);
+    expect(tokenize("flame_spread at 0.68 cm/s")).toEqual(["flam", "spread", "0.68", "cm"]);
   });
   it("handles null and empty", () => {
     expect(tokenize(null)).toEqual([]);
