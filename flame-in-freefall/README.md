@@ -11,9 +11,17 @@ with a local-AI Ask page and a "what NASA doesn't know yet" page. Runs fully off
     source .venv/bin/activate        # Windows: .venv\Scripts\activate
     pip install -r requirements.txt
 
-App (Nermine, task A4) - run from the repo root:
+App (Next.js, in `app/`) - needs Node 20+:
 
-    npx create-next-app@latest app --ts --tailwind --app
+    cd app
+    npm install          # once, while online
+    npm run dev          # http://localhost:3000 (re-reads data/ on every request)
+    npm test             # vitest unit tests
+    npm run lint
+    npm run build && npm start   # production mode; rebuild after changing data/
+
+If `data/cards.json` is `[]`, the app shows the fake DEMO- cards from
+`data/sample_cards.json` with a red SAMPLE DATA banner.
 
 ## Card pipeline
 
