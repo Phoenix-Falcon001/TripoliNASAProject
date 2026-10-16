@@ -1,0 +1,110 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "flame-in-freefall/card.schema.json",
+  "title": "Evidence card",
+  "description": "One finding from one NASA source. Frozen after C1 (team call, week 1).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "card_id", "source_id", "page", "evidence_quote", "finding",
+    "hazard", "control_category", "scores", "score_reasons",
+    "source_type", "status"
+  ],
+  "properties": {
+    "card_id": {
+      "type": "string",
+      "pattern": "^(SAF|FLX|BAS)-[0-9]{3}$",
+      "description": "SAF = SAFFIRE, FLX = FLEX, BAS = BASS-II"
+    },
+    "source_id": { "type": "string", "pattern": "^S[0-9]{2}$" },
+    "page": {
+      "type": "integer", "minimum": 1,
+      "description": "PDF page index (1 = first page of the file), NOT the printed page number"
+    },
+    "evidence_quote": {
+      "type": "string", "minLength": 10, "maxLength": 250,
+      "description": "Exact sentence from the paper, max 25 words (word count checked by validate_cards.py)"
+    },
+    "finding": { "type": "string", "minLength": 10, "description": "What NASA reported. No advice, no opinion." },
+    "material_or_fuel": { "type": ["string", "null"] },
+    "conditions": { "type": ["string", "null"], "description": "e.g. oxygen %, pressure, flow speed, as stated" },
+    "values": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["quantity", "value", "unit"],
+        "properties": {
+          "quantity": { "type": "string", "description": "e.g. flame spread rate" },
+          "value": { "type": "string", "description": "Kept as text exactly as written, e.g. '0.68' or '~2'" },
+          "unit": { "type": "string" }
+        }
+      },
+      "default": []
+    },
+    "earth_comparison": { "type": ["string", "null"] },
+    "hazard": {
+      "enum": ["flame_spread", "ignition", "heat_release", "toxic_products",
+               "extinction", "detection", "material_flammability", "other"]
+    },
+    "control_category": { "enum": ["prevent", "detect", "suppress", "material_selection"] },
+    "team_interpretation": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "required": ["text", "suggested_by"],
+      "properties": {
+        "text": { "type": "string" },
+        "suggested_by": { "enum": ["Claude", "Ollama", "Bassam", "Nermine"] }
+      }
+    },
+    "open_question": { "type": ["string", "null"], "description": "Only what the paper itself says is unknown/untested" },
+    "related_cards": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["card_id", "relation"],
+        "properties": {
+          "card_id": { "type": "string", "pattern": "^(SAF|FLX|BAS)-[0-9]{3}$" },
+          "relation": { "enum": ["agrees", "conflicts", "extends"] }
+        }
+      },
+      "default": []
+    },
+    "scores": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["crew_safety", "evidence", "moon_mars"],
+      "properties": {
+        "crew_safety": { "type": "integer", "minimum": 1, "maximum": 5 },
+        "evidence":    { "type": "integer", "minimum": 1, "maximum": 5 },
+        "moon_mars":   { "type": "integer", "minimum": 1, "maximum": 5 }
+      }
+    },
+    "score_reasons": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["crew_safety", "evidence", "moon_mars"],
+      "properties": {
+        "crew_safety": { "type": "string" },
+        "evidence":    { "type": "string" },
+        "moon_mars":   { "type": "string" }
+      }
+    },
+    "source_type": { "enum": ["full_paper", "slides", "summary"] },
+    "auto_check": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "quote_found":   { "type": "boolean" },
+        "quote_score":   { "type": "number" },
+        "numbers_found": { "type": "boolean" },
+        "missing_numbers": { "type": "array", "items": { "type": "string" } },
+        "reasons": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "status": { "enum": ["draft", "flagged", "verified", "rejected"] },
+    "reviewed_by": { "type": ["string", "null"] },
+    "expert_checked": { "type": "boolean", "default": false }
+  }
+}

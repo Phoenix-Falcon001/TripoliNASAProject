@@ -1,0 +1,5 @@
+pdfplumber>=0.11
+rapidfuzz>=3.6
+jsonschema>=4.21
+pandas>=2.2
+openpyxl>=3.1
