@@ -39,7 +39,7 @@ export type LayerKind = keyof typeof STYLES;
 export function LayerBadge({ kind }: { kind: LayerKind }) {
   const s = STYLES[kind];
   return (
-    <span className={`inline-flex items-center gap-1 rounded px-2 py-0.5 text-xs font-bold uppercase tracking-wide ${s.badge}`}>
+    <span className={`inline-flex shrink-0 items-center gap-1 whitespace-nowrap rounded px-2 py-0.5 text-xs font-bold uppercase tracking-wide ${s.badge}`}>
       <span aria-hidden="true">{s.symbol}</span>
       {s.label}
     </span>

@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { AiExplanation, NasaFound, OurReading } from "@/components/Layers";
-import { experimentOf, findCard, findSource, getAiExplanation, getCardData } from "@/lib/cards";
-import { DEFAULT_WEIGHTS, formatScore, score } from "@/lib/rank";
+import StabilityBadge from "@/components/StabilityBadge";
+import { experimentOf, findCard, findSource, getAiExplanation, getCardData, getStability } from "@/lib/cards";
+import { DEFAULT_WEIGHTS, formatScore, rankCards } from "@/lib/rank";
 import { CONTROL_LABELS, HAZARD_LABELS, type Relation } from "@/lib/types";
 
 export function generateStaticParams() {
@@ -46,6 +47,7 @@ export default async function CardPage({ params }: PageProps<"/card/[id]">) {
   const ai = getAiExplanation(card.card_id);
   const values = card.values ?? [];
   const related = card.related_cards ?? [];
+  const ranked = rankCards(data.cards, DEFAULT_WEIGHTS).find((r) => r.card.card_id === card.card_id)!;
 
   return (
     <article className="space-y-5">
@@ -123,9 +125,13 @@ export default async function CardPage({ params }: PageProps<"/card/[id]">) {
         ) : (
           <p>No team reading on this card yet.</p>
         )}
-        <p className="mt-3 text-sm">
-          Default score <strong>{formatScore(score(card.scores, DEFAULT_WEIGHTS))}</strong> (weights crew{" "}
-          {DEFAULT_WEIGHTS.crew}% · evidence {DEFAULT_WEIGHTS.evid}% · Moon/Mars {DEFAULT_WEIGHTS.mm}%)
+        <p className="mt-3 flex flex-wrap items-center gap-2 text-sm">
+          <span>
+            Default score <strong>{formatScore(ranked.score)}</strong>, rank <strong>#{ranked.rank}</strong> of{" "}
+            {data.cards.length} (weights crew {DEFAULT_WEIGHTS.crew}% · evidence {DEFAULT_WEIGHTS.evid}% · Moon/Mars{" "}
+            {DEFAULT_WEIGHTS.mm}%)
+          </span>
+          <StabilityBadge s={getStability().get(card.card_id)} />
         </p>
         <table className="mt-2 w-full border-collapse text-sm">
           <thead>

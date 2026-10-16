@@ -1,17 +1,18 @@
 "use client";
 
-import Link from "next/link";
 import { useMemo, useState } from "react";
-import { LayerBadge } from "@/components/Layers";
+import CardSummary from "@/components/CardSummary";
+import StabilityBadge from "@/components/StabilityBadge";
+import WeightSliders from "@/components/WeightSliders";
 import { NO_FILTERS, NO_MATERIAL, distinct, filterItems, type CardFilters } from "@/lib/filter";
-import { formatScore } from "@/lib/rank";
+import { DEFAULT_WEIGHTS, formatScore, rankCards, type Weights } from "@/lib/rank";
+import type { Stability } from "@/lib/stability";
 import { CONTROL_CATEGORIES, CONTROL_LABELS, HAZARDS, HAZARD_LABELS, type Card } from "@/lib/types";
 
 export interface ExploreItem {
   card: Card;
-  score: number;
-  rank: number;
   experiment: string;
+  stability?: Stability;
 }
 
 interface Option {
@@ -54,9 +55,20 @@ function Select({
   );
 }
 
+const TOP_N = 10;
+
 export default function ExploreList({ items }: { items: ExploreItem[] }) {
   const [filters, setFilters] = useState<CardFilters>(NO_FILTERS);
-  const shown = useMemo(() => filterItems(items, filters), [items, filters]);
+  const [weights, setWeights] = useState<Weights>(DEFAULT_WEIGHTS);
+
+  const ranked = useMemo(() => {
+    const byId = new Map(items.map((i) => [i.card.card_id, i]));
+    return rankCards(
+      items.map((i) => i.card),
+      weights,
+    ).map((r) => ({ ...byId.get(r.card.card_id)!, score: r.score, rank: r.rank }));
+  }, [items, weights]);
+  const shown = useMemo(() => filterItems(ranked, filters), [ranked, filters]);
 
   const experiments = distinct(items.map((i) => i.experiment)).map((e) => ({ value: e, label: e }));
   const usedHazards = new Set(items.map((i) => i.card.hazard));
@@ -66,11 +78,13 @@ export default function ExploreList({ items }: { items: ExploreItem[] }) {
   );
   if (items.some((i) => !i.card.material_or_fuel)) materials.push({ value: NO_MATERIAL, label: "(not stated)" });
 
-  const set = <K extends keyof CardFilters>(key: K) => (v: string) => setFilters((f) => ({ ...f, [key]: v }));
+  const set = (key: keyof CardFilters) => (v: string) => setFilters((f) => ({ ...f, [key]: v }));
   const anyFilter = Object.values(filters).some(Boolean);
 
   return (
-    <div className="mt-4">
+    <div className="mt-4 space-y-3">
+      <WeightSliders weights={weights} onChange={setWeights} />
+
       <form
         aria-label="Filter cards"
         className="grid grid-cols-2 gap-3 rounded-md border border-neutral-200 bg-neutral-50 p-3 md:grid-cols-5 md:items-end"
@@ -102,40 +116,41 @@ export default function ExploreList({ items }: { items: ExploreItem[] }) {
         </button>
       </form>
 
-      <p aria-live="polite" className="mt-3 text-sm text-neutral-600">
-        Showing {shown.length} of {items.length} cards · sorted by score (40/35/25)
+      <p aria-live="polite" className="text-sm text-neutral-600">
+        Showing {shown.length} of {items.length} cards · sorted by score ({weights.crew}/{weights.evid}/{weights.mm}). Stability
+        badges use all 27 weight mixes, not just the sliders.
       </p>
 
       {shown.length === 0 ? (
         <p className="mt-6 text-neutral-700">No cards match these filters.</p>
       ) : (
-        <ol className="mt-3 space-y-3">
-          {shown.map(({ card, score, rank, experiment }) => (
+        <ol className="space-y-3">
+          {shown.map(({ card, score, rank, experiment, stability }) => (
             <li key={card.card_id}>
-              <Link
-                href={`/card/${card.card_id}`}
-                className="block rounded-md border border-neutral-200 p-4 hover:border-neutral-500 hover:shadow-sm focus-visible:outline-2 focus-visible:outline-blue-700"
-              >
-                <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                  <span className="text-sm font-semibold text-neutral-500">#{rank}</span>
-                  <span className="font-mono font-bold">{card.card_id}</span>
-                  <span className="text-sm text-neutral-700">{experiment}</span>
-                  <span className="rounded bg-neutral-200 px-2 py-0.5 text-xs">{HAZARD_LABELS[card.hazard]}</span>
-                  <span className="rounded bg-neutral-200 px-2 py-0.5 text-xs">{CONTROL_LABELS[card.control_category]}</span>
-                  <span className="ml-auto text-sm">
+              <CardSummary
+                card={card}
+                experiment={experiment}
+                before={
+                  <span className="text-sm font-semibold text-neutral-500">
+                    #{rank}
+                    {rank <= TOP_N && <span className="sr-only"> (top {TOP_N})</span>}
+                  </span>
+                }
+                after={
+                  <>
                     Score <strong>{formatScore(score)}</strong>
                     <span className="text-neutral-500">
                       {" "}
                       (crew {card.scores.crew_safety} · evidence {card.scores.evidence} · Moon/Mars {card.scores.moon_mars})
                     </span>
-                  </span>
+                  </>
+                }
+              >
+                <div className="mt-2 flex flex-wrap items-center gap-2 text-sm text-neutral-600">
+                  <StabilityBadge s={stability} />
+                  {card.material_or_fuel && <span>Material: {card.material_or_fuel}</span>}
                 </div>
-                <div className="mt-2 flex items-start gap-2">
-                  <LayerBadge kind="nasa" />
-                  <p className="text-neutral-900">{card.finding}</p>
-                </div>
-                {card.material_or_fuel && <p className="mt-1 text-sm text-neutral-600">Material: {card.material_or_fuel}</p>}
-              </Link>
+              </CardSummary>
             </li>
           ))}
         </ol>
