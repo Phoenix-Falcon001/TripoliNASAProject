@@ -1,0 +1,4 @@
+source_id,title,ntrs_id,experiment,source_type,year,url,pdf_filename,notes
+S91,SAMPLE source A (fake SAFFIRE paper - not a NASA document),,SAFFIRE,full_paper,,,,development only
+S92,SAMPLE source B (fake FLEX paper - not a NASA document),,FLEX,slides,,,,development only
+S93,SAMPLE source C (fake BASS-II paper - not a NASA document),,BASS-II,summary,,,,development only
