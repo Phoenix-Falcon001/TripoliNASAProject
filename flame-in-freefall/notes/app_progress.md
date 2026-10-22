@@ -44,6 +44,12 @@ Every page has the top nav and the footer "Evidence from NASA papers · Our read
 `app/lib/`: `types.ts`, `cards.ts`, `rank.ts`, `stability.ts`, `weights.ts`, `filter.ts`, `retrieve.ts`, `prompts.ts`, `ask.ts`, `citations.ts`, `demoAnswers.ts`, `csv.ts`. Each has unit tests.
 `app/app/api/ask/route.ts` streams Ask answers; `app/app/api/ollama/route.ts` checks the Ollama status.
 
+### Added 22 Oct: review tools and demo check
+- **`/review` page** (only in `npm run dev`): each checked draft next to its PDF page text, with the quote highlighted yellow and numbers blue. Approve/Flag/Reject (keys A/F/R). Decisions are saved in `data/review/<SXX>_decisions.json` with a card fingerprint, so a card edited after approval must be reviewed again.
+- **`pipeline/promote_verified.py`**: copies approved, unchanged, schema-valid cards into `data/cards.json`. Dry run by default; `--write` saves. Python tests in `pipeline/test_promote_verified.py`.
+- **`npm run preflight`**: demo-day check of data, build freshness, CDN URLs, telemetry, Ollama and model, plus a live test question.
+- **What to do next:** see `notes/next_phase.md`.
+
 ## How to run
 ```
 cd app

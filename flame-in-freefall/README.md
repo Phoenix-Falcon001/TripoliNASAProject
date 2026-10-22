@@ -44,9 +44,25 @@ from `app/lib/prompts.ts`) and appends rows to `data/eval/results.csv` with
 `invented_number`, `cited_source` and `said_not_in_evidence` pre-filled.
 Fill in `verdict` and `marked_by` by hand; the Data page summarises the results.
 
+### Demo-day check
+
+    npm run build && npm start                      # terminal 1
+    npm run preflight -- http://localhost:3000      # terminal 2
+
+Checks the data, that the build is newer than the data, no CDN/tracker URLs,
+telemetry off, Ollama + model (and loads the model into memory), and a test question.
+
 ## Card pipeline
 
-    python pipeline/extract_text.py papers/S01.pdf S01      # D1
-    python pipeline/validate_cards.py data/drafts/S01_drafts.json   # D2
+    python pipeline/extract_text.py papers/S01.pdf S01               # D1  PDF -> data/text/S01.json
+    python pipeline/validate_cards.py data/drafts/S01_drafts.json    # D2  -> data/drafts/S01_checked.json
+    cd app && npm run dev     # then open http://localhost:3000/review  (D3 human review)
+    python pipeline/promote_verified.py           # dry run: what would change
+    python pipeline/promote_verified.py --write   # approved cards -> data/cards.json
 
-Only cards with `"status": "verified"` go into `data/cards.json`.
+Only cards a human approved on the review page go into `data/cards.json`.
+Decisions are saved in `data/review/<SXX>_decisions.json` (commit them: they are the audit trail).
+If a card is edited after it was approved, its approval becomes stale and it must be reviewed again.
+The review page only exists in `npm run dev`, never in the demo build.
+
+Pipeline tests: `python -m unittest discover pipeline`
