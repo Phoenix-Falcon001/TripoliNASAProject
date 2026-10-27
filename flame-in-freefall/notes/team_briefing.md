@@ -1,5 +1,7 @@
 # Flame in Freefall: team briefing pack
 
+> **Update 27 Oct:** we are now a team of 5 and the deadline moved to **Sun 1 Nov 2026**. The current plan is `docs/TEAM_TASKS.md`, live KPIs are in `docs/KPI.md` (`npm run kpi`), and team rules are in `CONTRIBUTING.md`. Where this file disagrees with those, they win.
+
 > **How to use this file:** paste the whole thing into a Claude chat with the instruction below.
 >
 > *"You are helping our NASA Space Apps team. Using ONLY the facts in this document, write: (1) a one-page summary of what we've done so far for the whole team, (2) a short briefing for each role in section 7, and (3) a KPI dashboard from section 6. Don't invent progress, dates or numbers that aren't here; where something is unknown, say 'TBD'."*
@@ -87,28 +89,28 @@ All code is on the git branch `claude/app-foundation-cards-lxbx6f` (12 commits).
 |---|---|
 | Sun 25 Oct | S01 reviewed (≥ 8 verified) |
 | Sun 1 Nov | ≥ 20 verified, all 3 experiments covered, G1 questions written |
-| **Sun 8 Nov** | **30 verified cards**, model chosen, preflight ✅ READY |
+| **Sun 1 Nov** | **30 verified cards**, model chosen, preflight ✅ READY |
 | Demo / submission day | **TBD** (please fill in) |
 
 ## 6. KPIs: what we still need to do
 
 | # | KPI | Now | Target | Deadline | Owner |
 |---|---|---|---|---|---|
-| K1 | Verified cards in `cards.json` | **0** | **30** | Sun 8 Nov | Evidence team |
+| K1 | Verified cards in `cards.json` | **0** | **30** | Sun 1 Nov | Evidence team |
 | K2 | Experiments covered (SAFFIRE / FLEX / BASS-II) | 0 of 3 verified (1 paper listed) | 3 of 3 | Sun 1 Nov | Evidence team |
 | K3 | Papers (sources) in `sources.csv` | 1 | ≥ 3 (1+ per experiment) | Wed 28 Oct | Evidence team |
 | K4 | Draft cards reviewed (approved + flagged + rejected) | 0 of 10 | 100% of drafts | ongoing | Reviewers |
-| K5 | Second-check rate (approved cards re-checked by another person against the PDF) | 0% | ≥ 20% | Sun 8 Nov | Reviewer 2 |
-| K6 | Cards with an open question (feeds the "doesn't know" page) | 0 | ≥ 5 | Sun 8 Nov | Evidence team |
-| K7 | Cards linked as related (agrees / conflicts / extends) | 0 | ≥ 10 links, ≥ 2 conflicts | Sun 8 Nov | Evidence team |
+| K5 | Second-check rate (approved cards re-checked by another person against the PDF) | 0% | ≥ 20% | Sun 1 Nov | Reviewer 2 |
+| K6 | Cards with an open question (feeds the "doesn't know" page) | 0 | ≥ 5 | Sun 1 Nov | Evidence team |
+| K7 | Cards linked as related (agrees / conflicts / extends) | 0 | ≥ 10 links, ≥ 2 conflicts | Sun 1 Nov | Evidence team |
 | K8 | G1 test questions written | 0 | ~20 (≈ 5 unanswerable) | Sun 1 Nov | AI & eval |
-| K9 | Models tested with G1 | 0 | ≥ 2 | Sun 8 Nov | AI & eval |
-| K10 | **Invented-number rate** of the chosen model in G1 | not measured | **0%** (target) | Sun 8 Nov | AI & eval |
-| K11 | Answers that cite a card (G1) | not measured | ≥ 95% | Sun 8 Nov | AI & eval |
-| K12 | Correct "Not in our evidence" on unanswerable questions | not measured | 100% | Sun 8 Nov | AI & eval |
-| K13 | Real pre-written answers (offline fallback) | 0 | 3–5 (one per demo question) | Sun 8 Nov | AI & eval + Evidence check |
-| K14 | Cards with an AI explanation (`ai_cache.json`) | 0 | top 10 cards, all checked | Sun 8 Nov | AI & eval |
-| K15 | `npm run preflight` result with real data, Wi-Fi off | not run | ✅ READY | Sun 8 Nov | App lead |
+| K9 | Models tested with G1 | 0 | ≥ 2 | Sun 1 Nov | AI & eval |
+| K10 | **Invented-number rate** of the chosen model in G1 | not measured | **0%** (target) | Sun 1 Nov | AI & eval |
+| K11 | Answers that cite a card (G1) | not measured | ≥ 95% | Sun 1 Nov | AI & eval |
+| K12 | Correct "Not in our evidence" on unanswerable questions | not measured | 100% | Sun 1 Nov | AI & eval |
+| K13 | Real pre-written answers (offline fallback) | 0 | 3–5 (one per demo question) | Sun 1 Nov | AI & eval + Evidence check |
+| K14 | Cards with an AI explanation (`ai_cache.json`) | 0 | top 10 cards, all checked | Sun 1 Nov | AI & eval |
+| K15 | `npm run preflight` result with real data, Wi-Fi off | not run | ✅ READY | Sun 1 Nov | App lead |
 | K16 | Demo script rehearsed (timed click path) | 0 | ≥ 2 full rehearsals | before demo | Presentation |
 
 ## 7. Roles for a team of 4–5 (proposal; please confirm names)

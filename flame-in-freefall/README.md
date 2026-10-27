@@ -44,6 +44,13 @@ from `app/lib/prompts.ts`) and appends rows to `data/eval/results.csv` with
 `invented_number`, `cited_source` and `said_not_in_evidence` pre-filled.
 Fill in `verdict` and `marked_by` by hand; the Data page summarises the results.
 
+### Team KPIs
+
+    npm run kpi        # prints K1–K16 and writes docs/KPI.md (post it in the team chat)
+
+Team rules: `CONTRIBUTING.md` (repo root). Work packages: `docs/TEAM_TASKS.md`.
+CI (lint, tests, build, pipeline tests) runs on every pull request.
+
 ### Demo-day check
 
     npm run build && npm start                      # terminal 1

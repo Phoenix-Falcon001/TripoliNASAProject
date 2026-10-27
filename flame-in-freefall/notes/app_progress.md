@@ -1,5 +1,7 @@
 # App progress — summary and next steps
 
+> **Update 27 Oct:** we are now a team of 5 and the deadline moved to **Sun 1 Nov 2026**. The current plan is `docs/TEAM_TASKS.md`, live KPIs are in `docs/KPI.md` (`npm run kpi`), and team rules are in `CONTRIBUTING.md`. Where this file disagrees with those, they win.
+
 Branch: `claude/app-foundation-cards-lxbx6f` · Last checked: lint ✓ · build ✓ · 68 unit tests ✓
 
 ## What we built
@@ -65,7 +67,7 @@ Local AI: `ollama pull llama3.1:8b`, then refresh the Ask page. To try another m
 
 ### Evidence (Bassam)
 - [ ] Review the 10 S01 draft cards. Mark the good ones `verified` and copy them into `data/cards.json`. The sample data and banner switch off automatically.
-- [ ] Add the FLEX and BASS-II sources to `data/sources.csv` and draft their cards (target: 30 verified by Sun 8 Nov).
+- [ ] Add the FLEX and BASS-II sources to `data/sources.csv` and draft their cards (target: 30 verified by Sun 1 Nov).
 - [ ] Fill `related_cards` (agrees / conflicts / extends) and `open_question` where the paper states one. These feed the gaps page.
 - [ ] Update `notes/review_log.md` with the numbers.
 

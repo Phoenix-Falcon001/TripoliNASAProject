@@ -4,4 +4,4 @@
 |---|---|---|---|---|---|---|
 | | S01 | 10 | | | | |
 
-**Running total:** drafted 10 · verified 0 · target 30 by Sun 8 Nov
+**Running total:** drafted 10 · verified 0 · target 30 by Sun 1 Nov
