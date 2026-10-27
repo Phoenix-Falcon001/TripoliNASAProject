@@ -1,0 +1,50 @@
+name: CI
+
+# Runs on every pull request and on pushes to main.
+# CI may use the internet to install packages; the app itself must stay offline.
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  NEXT_TELEMETRY_DISABLED: "1"
+
+jobs:
+  app:
+    name: App (lint, tests, build)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: flame-in-freefall/app
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: flame-in-freefall/app/package-lock.json
+      - run: npm ci
+      - run: npm run lint
+      - run: npm test
+      - run: npm run build
+
+  pipeline:
+    name: Pipeline (Python tests)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: flame-in-freefall
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: flame-in-freefall/requirements.txt
+      - run: pip install -r requirements.txt
+      - run: python -m unittest discover pipeline -v
