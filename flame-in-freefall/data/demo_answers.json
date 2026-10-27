@@ -1,0 +1,12 @@
+[
+  {
+    "question": "What do we know about flame spread?",
+    "answer": "SAMPLE pre-written answer for development only.\n\nWhat NASA found: sample finding about flame spread [DEMO-001]. Another sample finding [DEMO-008].\n\nOur safety reading: sample team reading, not NASA guidance [DEMO-001].\n\nSummary: this is sample text, not a real answer.",
+    "card_ids": ["DEMO-001", "DEMO-008"]
+  },
+  {
+    "question": "How can a fire be detected?",
+    "answer": "SAMPLE pre-written answer for development only.\n\nWhat NASA found: sample detection finding [DEMO-006].\n\nOur safety reading: sample team reading, not NASA guidance [DEMO-006].\n\nSummary: this is sample text, not a real answer.",
+    "card_ids": ["DEMO-006"]
+  }
+]

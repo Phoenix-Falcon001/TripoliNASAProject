@@ -1,0 +1,385 @@
+[
+  {
+    "card_id": "DEMO-001",
+    "source_id": "S91",
+    "page": 2,
+    "evidence_quote": "Sample quote for development only (DEMO-001).",
+    "finding": "Sample finding for development only. This is not a NASA result (DEMO-001).",
+    "material_or_fuel": "Sample material B",
+    "conditions": "Sample conditions for development only",
+    "values": [
+      {
+        "quantity": "Sample quantity 1 (fake)",
+        "value": "1.0",
+        "unit": "sample unit"
+      },
+      {
+        "quantity": "Sample quantity 2 (fake)",
+        "value": "~2",
+        "unit": "sample unit"
+      }
+    ],
+    "earth_comparison": "Sample Earth comparison for development only.",
+    "hazard": "flame_spread",
+    "control_category": "prevent",
+    "team_interpretation": {
+      "text": "Sample team reading for development only (DEMO-001).",
+      "suggested_by": "Bassam"
+    },
+    "open_question": "Sample open question for development only (DEMO-001)?",
+    "related_cards": [
+      {
+        "card_id": "DEMO-002",
+        "relation": "agrees"
+      },
+      {
+        "card_id": "DEMO-007",
+        "relation": "conflicts"
+      }
+    ],
+    "scores": {
+      "crew_safety": 5,
+      "evidence": 4,
+      "moon_mars": 4
+    },
+    "score_reasons": {
+      "crew_safety": "Sample reason for development only.",
+      "evidence": "Sample reason for development only.",
+      "moon_mars": "Sample reason for development only."
+    },
+    "source_type": "full_paper",
+    "status": "verified",
+    "reviewed_by": "SAMPLE",
+    "expert_checked": false
+  },
+  {
+    "card_id": "DEMO-002",
+    "source_id": "S91",
+    "page": 3,
+    "evidence_quote": "Sample quote for development only (DEMO-002).",
+    "finding": "Sample finding for development only. This is not a NASA result (DEMO-002).",
+    "material_or_fuel": "Sample material A",
+    "conditions": "Sample conditions for development only",
+    "values": [
+      {
+        "quantity": "Sample quantity 1 (fake)",
+        "value": "2.0",
+        "unit": "sample unit"
+      }
+    ],
+    "earth_comparison": null,
+    "hazard": "heat_release",
+    "control_category": "suppress",
+    "team_interpretation": {
+      "text": "Sample team reading for development only (DEMO-002).",
+      "suggested_by": "Nermine"
+    },
+    "open_question": null,
+    "related_cards": [
+      {
+        "card_id": "DEMO-001",
+        "relation": "agrees"
+      }
+    ],
+    "scores": {
+      "crew_safety": 4,
+      "evidence": 5,
+      "moon_mars": 3
+    },
+    "score_reasons": {
+      "crew_safety": "Sample reason for development only.",
+      "evidence": "Sample reason for development only.",
+      "moon_mars": "Sample reason for development only."
+    },
+    "source_type": "full_paper",
+    "status": "verified",
+    "reviewed_by": "SAMPLE",
+    "expert_checked": false
+  },
+  {
+    "card_id": "DEMO-003",
+    "source_id": "S91",
+    "page": 4,
+    "evidence_quote": "Sample quote for development only (DEMO-003).",
+    "finding": "Sample finding for development only. This is not a NASA result (DEMO-003).",
+    "material_or_fuel": null,
+    "conditions": "Sample conditions for development only",
+    "values": [],
+    "earth_comparison": "Sample Earth comparison for development only.",
+    "hazard": "toxic_products",
+    "control_category": "detect",
+    "team_interpretation": {
+      "text": "Sample team reading for development only (DEMO-003).",
+      "suggested_by": "Claude"
+    },
+    "open_question": "Sample open question for development only (DEMO-003)?",
+    "related_cards": [],
+    "scores": {
+      "crew_safety": 5,
+      "evidence": 2,
+      "moon_mars": 5
+    },
+    "score_reasons": {
+      "crew_safety": "Sample reason for development only.",
+      "evidence": "Sample reason for development only.",
+      "moon_mars": "Sample reason for development only."
+    },
+    "source_type": "full_paper",
+    "status": "verified",
+    "reviewed_by": "SAMPLE",
+    "expert_checked": false
+  },
+  {
+    "card_id": "DEMO-004",
+    "source_id": "S92",
+    "page": 5,
+    "evidence_quote": "Sample quote for development only (DEMO-004).",
+    "finding": "Sample finding for development only. This is not a NASA result (DEMO-004).",
+    "material_or_fuel": "Sample material A",
+    "conditions": "Sample conditions for development only",
+    "values": [
+      {
+        "quantity": "Sample quantity 1 (fake)",
+        "value": "4.0",
+        "unit": "sample unit"
+      }
+    ],
+    "earth_comparison": null,
+    "hazard": "extinction",
+    "control_category": "suppress",
+    "team_interpretation": {
+      "text": "Sample team reading for development only (DEMO-004).",
+      "suggested_by": "Bassam"
+    },
+    "open_question": "Sample open question for development only (DEMO-004)?",
+    "related_cards": [
+      {
+        "card_id": "DEMO-005",
+        "relation": "extends"
+      }
+    ],
+    "scores": {
+      "crew_safety": 3,
+      "evidence": 4,
+      "moon_mars": 2
+    },
+    "score_reasons": {
+      "crew_safety": "Sample reason for development only.",
+      "evidence": "Sample reason for development only.",
+      "moon_mars": "Sample reason for development only."
+    },
+    "source_type": "slides",
+    "status": "verified",
+    "reviewed_by": "SAMPLE",
+    "expert_checked": false
+  },
+  {
+    "card_id": "DEMO-005",
+    "source_id": "S92",
+    "page": 6,
+    "evidence_quote": "Sample quote for development only (DEMO-005).",
+    "finding": "Sample finding for development only. This is not a NASA result (DEMO-005).",
+    "material_or_fuel": "Sample material B",
+    "conditions": "Sample conditions for development only",
+    "values": [
+      {
+        "quantity": "Sample quantity 1 (fake)",
+        "value": "5.0",
+        "unit": "sample unit"
+      },
+      {
+        "quantity": "Sample quantity 2 (fake)",
+        "value": "~10",
+        "unit": "sample unit"
+      }
+    ],
+    "earth_comparison": "Sample Earth comparison for development only.",
+    "hazard": "ignition",
+    "control_category": "prevent",
+    "team_interpretation": null,
+    "open_question": null,
+    "related_cards": [
+      {
+        "card_id": "DEMO-004",
+        "relation": "extends"
+      },
+      {
+        "card_id": "DEMO-009",
+        "relation": "agrees"
+      }
+    ],
+    "scores": {
+      "crew_safety": 4,
+      "evidence": 3,
+      "moon_mars": 3
+    },
+    "score_reasons": {
+      "crew_safety": "Sample reason for development only.",
+      "evidence": "Sample reason for development only.",
+      "moon_mars": "Sample reason for development only."
+    },
+    "source_type": "slides",
+    "status": "verified",
+    "reviewed_by": "SAMPLE",
+    "expert_checked": false
+  },
+  {
+    "card_id": "DEMO-006",
+    "source_id": "S92",
+    "page": 7,
+    "evidence_quote": "Sample quote for development only (DEMO-006).",
+    "finding": "Sample finding for development only. This is not a NASA result (DEMO-006).",
+    "material_or_fuel": null,
+    "conditions": "Sample conditions for development only",
+    "values": [],
+    "earth_comparison": null,
+    "hazard": "detection",
+    "control_category": "detect",
+    "team_interpretation": {
+      "text": "Sample team reading for development only (DEMO-006).",
+      "suggested_by": "Ollama"
+    },
+    "open_question": "Sample open question for development only (DEMO-006)?",
+    "related_cards": [],
+    "scores": {
+      "crew_safety": 2,
+      "evidence": 3,
+      "moon_mars": 4
+    },
+    "score_reasons": {
+      "crew_safety": "Sample reason for development only.",
+      "evidence": "Sample reason for development only.",
+      "moon_mars": "Sample reason for development only."
+    },
+    "source_type": "slides",
+    "status": "verified",
+    "reviewed_by": "SAMPLE",
+    "expert_checked": false
+  },
+  {
+    "card_id": "DEMO-007",
+    "source_id": "S93",
+    "page": 8,
+    "evidence_quote": "Sample quote for development only (DEMO-007).",
+    "finding": "Sample finding for development only. This is not a NASA result (DEMO-007).",
+    "material_or_fuel": "Sample material B",
+    "conditions": "Sample conditions for development only",
+    "values": [
+      {
+        "quantity": "Sample quantity 1 (fake)",
+        "value": "7.0",
+        "unit": "sample unit"
+      },
+      {
+        "quantity": "Sample quantity 2 (fake)",
+        "value": "~14",
+        "unit": "sample unit"
+      }
+    ],
+    "earth_comparison": "Sample Earth comparison for development only.",
+    "hazard": "material_flammability",
+    "control_category": "material_selection",
+    "team_interpretation": {
+      "text": "Sample team reading for development only (DEMO-007).",
+      "suggested_by": "Bassam"
+    },
+    "open_question": null,
+    "related_cards": [
+      {
+        "card_id": "DEMO-001",
+        "relation": "conflicts"
+      }
+    ],
+    "scores": {
+      "crew_safety": 4,
+      "evidence": 4,
+      "moon_mars": 5
+    },
+    "score_reasons": {
+      "crew_safety": "Sample reason for development only.",
+      "evidence": "Sample reason for development only.",
+      "moon_mars": "Sample reason for development only."
+    },
+    "source_type": "summary",
+    "status": "verified",
+    "reviewed_by": "SAMPLE",
+    "expert_checked": false
+  },
+  {
+    "card_id": "DEMO-008",
+    "source_id": "S93",
+    "page": 9,
+    "evidence_quote": "Sample quote for development only (DEMO-008).",
+    "finding": "Sample finding for development only. This is not a NASA result (DEMO-008).",
+    "material_or_fuel": "Sample material A",
+    "conditions": "Sample conditions for development only",
+    "values": [
+      {
+        "quantity": "Sample quantity 1 (fake)",
+        "value": "8.0",
+        "unit": "sample unit"
+      }
+    ],
+    "earth_comparison": null,
+    "hazard": "flame_spread",
+    "control_category": "material_selection",
+    "team_interpretation": {
+      "text": "Sample team reading for development only (DEMO-008).",
+      "suggested_by": "Nermine"
+    },
+    "open_question": "Sample open question for development only (DEMO-008)?",
+    "related_cards": [],
+    "scores": {
+      "crew_safety": 3,
+      "evidence": 2,
+      "moon_mars": 2
+    },
+    "score_reasons": {
+      "crew_safety": "Sample reason for development only.",
+      "evidence": "Sample reason for development only.",
+      "moon_mars": "Sample reason for development only."
+    },
+    "source_type": "summary",
+    "status": "verified",
+    "reviewed_by": "SAMPLE",
+    "expert_checked": false
+  },
+  {
+    "card_id": "DEMO-009",
+    "source_id": "S93",
+    "page": 10,
+    "evidence_quote": "Sample quote for development only (DEMO-009).",
+    "finding": "Sample finding for development only. This is not a NASA result (DEMO-009).",
+    "material_or_fuel": null,
+    "conditions": null,
+    "values": [],
+    "earth_comparison": "Sample Earth comparison for development only.",
+    "hazard": "other",
+    "control_category": "prevent",
+    "team_interpretation": {
+      "text": "Sample team reading for development only (DEMO-009).",
+      "suggested_by": "Bassam"
+    },
+    "open_question": null,
+    "related_cards": [
+      {
+        "card_id": "DEMO-005",
+        "relation": "agrees"
+      }
+    ],
+    "scores": {
+      "crew_safety": 1,
+      "evidence": 5,
+      "moon_mars": 1
+    },
+    "score_reasons": {
+      "crew_safety": "Sample reason for development only.",
+      "evidence": "Sample reason for development only.",
+      "moon_mars": "Sample reason for development only."
+    },
+    "source_type": "summary",
+    "status": "verified",
+    "reviewed_by": "SAMPLE",
+    "expert_checked": false
+  }
+]
