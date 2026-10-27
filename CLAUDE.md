@@ -1,6 +1,6 @@
 # Flame in Freefall — instructions for Claude Code
 
-NASA Space Apps Challenge 2026 (challenge: "Flame in Free Fall"). Team: Bassam (evidence & safety) and Nermine (app & engineering).
+NASA Space Apps Challenge 2026 (challenge: "Flame in Free Fall"). Team of 5: Bassam (evidence lead), Nermine (app & integration lead), Rita (AI & evaluation), Kafa (pipeline & data), Reviewer 2 (evidence reviewer). See Ownership below.
 We turn NASA fire-in-space papers (SAFFIRE, FLEX, BASS-II) into verified evidence cards, rank them for crew safety, answer questions from those cards only with a local AI, and show what NASA doesn't know yet.
 
 ## Hard rules (never break)
@@ -65,3 +65,16 @@ Keep the prompt in `app/lib/prompts.ts` so the G1 test script uses the identical
 - After each task: run `npm run lint`, `npm run build` and tests; fix errors before saying you're done. Then summarise what changed and what to test by hand.
 - Ask before adding dependencies beyond: next, react, tailwind, recharts, ajv, vitest.
 - Commit in small steps with clear messages.
+
+## Ownership (respect this in every session)
+Paths are relative to `flame-in-freefall/`. Only change files your owner role covers. If a task needs a file someone else owns, say so in the PR description (and ideally ask them first). Full work packages: `docs/TEAM_TASKS.md`. Rules: `CONTRIBUTING.md` (repo root).
+
+| Owner | Files and folders |
+|---|---|
+| **Nermine** (app & integration) | All pages under `app/app/` except those listed for Rita and Kafa; `app/app/layout.tsx`, `app/app/globals.css`; shared components in `app/components/` (Layers, Nav, CardSummary, StabilityBadge, CitedText, ExploreList, WeightSliders, SampleBanner, AskClient); `app/lib/` files not listed below; `app/scripts/preflight.mjs`, `app/scripts/kpi*.mjs`; `app/package.json`; `.github/`; docs; merging PRs |
+| **Rita** (AI & evaluation) | `app/app/api/ask/`, `app/app/api/ollama/`; `app/lib/ask.ts`, `prompts.ts`, `retrieve.ts`, `citations.ts`, `demoAnswers.ts` (+ their tests); `app/scripts/eval-*.mjs`; `app/components/EvalSummary.tsx`; `data/eval/`, `data/ai_cache.json`, `data/demo_answers.json` |
+| **Kafa** (pipeline & data) | `pipeline/`; `app/app/review/`, `app/app/api/review/`; `app/lib/review.ts`, `highlight.ts` (+ tests); `app/components/Review*.tsx`, `app/components/DataChart*.tsx`, `app/components/HazardChart.tsx`; `data/drafts/`, `data/review/`, `data/chart/`; `data/sources.csv` tooling |
+| **Bassam** (evidence lead) | Content decisions: approving cards, scores, open questions, related cards, checking AI explanations and demo answers. `data/cards.json` changes only through `pipeline/promote_verified.py`. |
+| **Bassam + Nermine together** | `schema/card.schema.json` (no change without both) |
+
+Shared pages: Nermine places components that Rita (`EvalSummary`) and Kafa (`DataChart`) own; she does not change their insides, and they do not edit the pages.
