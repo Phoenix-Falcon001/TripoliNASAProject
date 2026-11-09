@@ -1,6 +1,8 @@
 # Next phase: real evidence in, demo-ready out
 
-**Goal of this phase:** 30 verified cards from all three experiments (SAFFIRE, FLEX, BASS-II) by **Sun 8 Nov**, the AI model chosen with the G1 test, and a green `npm run preflight`.
+> **Update 27 Oct:** we are now a team of 5 and the deadline moved to **Sun 1 Nov 2026**. The current plan is `docs/TEAM_TASKS.md`, live KPIs are in `docs/KPI.md` (`npm run kpi`), and team rules are in `CONTRIBUTING.md`. Where this file disagrees with those, they win.
+
+**Goal of this phase:** 30 verified cards from all three experiments (SAFFIRE, FLEX, BASS-II) by **Sun 1 Nov**, the AI model chosen with the G1 test, and a green `npm run preflight`.
 
 The app is finished enough. What's missing now is **real, human-verified evidence**. Only you two can do that part.
 

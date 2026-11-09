@@ -185,4 +185,10 @@ for (const [icon, msg] of results) console.log(icon ? `${icon} ${msg}` : msg);
 const fails = results.filter((r) => r[0] === "❌").length;
 const warns = results.filter((r) => r[0].startsWith("⚠")).length;
 console.log(`\n${fails ? "❌ NOT READY" : "✅ READY"} — ${fails} to fix, ${warns} warnings`);
+
+// Saved for `npm run kpi` (K15). Commit it after the run on the demo laptop.
+fs.writeFileSync(
+  path.join(ROOT, "notes", "preflight_last.json"),
+  JSON.stringify({ ready: fails === 0, fails, warns, app_checked: Boolean(APP_URL), checked_at: new Date().toISOString() }, null, 2) + "\n",
+);
 process.exit(fails ? 1 : 0);
