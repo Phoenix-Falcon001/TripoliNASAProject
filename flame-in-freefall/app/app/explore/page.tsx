@@ -1,16 +1,19 @@
 import type { Metadata } from "next";
 import ExploreList, { type ExploreItem } from "@/components/ExploreList";
 import { experimentOf, getCardData, getStability } from "@/lib/cards";
+import { getDecisions, trustBadges } from "@/lib/trust";
 
 export const metadata: Metadata = { title: "Explore · Flame in Freefall" };
 
 export default function ExplorePage() {
   const data = getCardData();
   const stab = getStability();
+  const decisions = getDecisions();
   const items: ExploreItem[] = data.cards.map((card) => ({
     card,
     experiment: experimentOf(data, card),
     stability: stab.get(card.card_id),
+    trust: trustBadges(card, decisions[card.card_id]),
   }));
 
   return (

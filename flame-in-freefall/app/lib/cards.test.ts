@@ -129,3 +129,25 @@ describe("loadDemoAnswers", () => {
     expect(loadDemoAnswers(path.join(REPO, "data"), new Set(["SAF-001"]))).toEqual([]);
   });
 });
+
+describe("no sample data once real cards exist", () => {
+  it("cards, sources and pre-written answers contain nothing from the sample set", async () => {
+    const { loadDemoAnswers } = await import("./cards");
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), "real-"));
+    try {
+      for (const f of ["sample_cards.json", "sample_sources.csv", "demo_answers.json"]) {
+        fs.copyFileSync(path.join(REPO, "data", f), path.join(dir, f));
+      }
+      fs.writeFileSync(path.join(dir, "sources.csv"), "source_id,title,experiment\nS01,Real paper,SAFFIRE\n");
+      fs.writeFileSync(path.join(dir, "cards.json"), JSON.stringify([makeCard()]));
+      const data = loadCardData(dir, SCHEMA_PATH);
+      expect(data.isSample).toBe(false);
+      expect(data.cards.some((c) => c.card_id.startsWith("DEMO-"))).toBe(false);
+      expect(data.sources.map((s) => s.source_id)).toEqual(["S01"]);
+      const answers = loadDemoAnswers(dir, new Set(data.cards.map((c) => c.card_id)));
+      expect(answers.some((a) => a.card_ids.some((id) => id.startsWith("DEMO-")))).toBe(false);
+    } finally {
+      fs.rmSync(dir, { recursive: true, force: true });
+    }
+  });
+});
