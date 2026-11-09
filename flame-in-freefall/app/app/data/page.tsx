@@ -2,13 +2,14 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import DataChart from "@/components/DataChart";
 import HazardChart from "@/components/HazardChart";
-import { experimentOf, getCardData, getEvalResults } from "@/lib/cards";
+import EvalSummary from "@/components/EvalSummary";
+import { experimentOf, getCardData } from "@/lib/cards";
+import { getEvalSummary } from "@/lib/evalSummary";
 import { getCharts } from "@/lib/chartData";
 import { CONTROL_LABELS, HAZARDS, HAZARD_LABELS } from "@/lib/types";
 
 export const metadata: Metadata = { title: "Data · Flame in Freefall" };
 
-const YES = /^(y|yes|true|1)$/i;
 
 function Stat({ label, value }: { label: string; value: number }) {
   return (
@@ -29,13 +30,6 @@ export default function DataPage() {
   const experiments = [...new Set(cards.map((c) => experimentOf(data, c)))].sort();
   const hazardCounts = HAZARDS.map((h) => ({ label: HAZARD_LABELS[h], count: cards.filter((c) => c.hazard === h).length }));
 
-  const evalRows = getEvalResults();
-  const groups = new Map<string, Record<string, string>[]>();
-  for (const r of evalRows) {
-    const key = `${r.mode || "?"} · ${r.model || "?"}`;
-    groups.set(key, [...(groups.get(key) ?? []), r]);
-  }
-  const verdicts = [...new Set(evalRows.map((r) => r.verdict || "(not marked)"))].sort();
 
   return (
     <div className="space-y-8">
@@ -194,50 +188,11 @@ export default function DataPage() {
         </div>
       </section>
 
-      <section aria-labelledby="eval-h">
+      <section aria-labelledby="eval-h" className="space-y-2">
         <h2 id="eval-h" className="text-xl font-semibold">
-          AI accuracy test (G1)
+          AI accuracy test (G1): plain AI vs our evidence
         </h2>
-        {evalRows.length === 0 ? (
-          <p className="mt-1 text-neutral-700">
-            Not run yet. Results will appear here from <code>data/eval/results.csv</code>.
-          </p>
-        ) : (
-          <div className="overflow-x-auto">
-            <table className="mt-2 w-full border-collapse text-sm">
-              <thead>
-                <tr>
-                  <th scope="col" className={th}>Mode · model</th>
-                  <th scope="col" className={th}>Answers</th>
-                  {verdicts.map((v) => (
-                    <th key={v} scope="col" className={th}>
-                      Verdict: {v}
-                    </th>
-                  ))}
-                  <th scope="col" className={th}>Invented a number</th>
-                  <th scope="col" className={th}>Cited a card</th>
-                  <th scope="col" className={th}>Said &quot;Not in our evidence&quot;</th>
-                </tr>
-              </thead>
-              <tbody>
-                {[...groups].map(([key, rows]) => (
-                  <tr key={key}>
-                    <td className={td}>{key}</td>
-                    <td className={`${td} font-mono`}>{rows.length}</td>
-                    {verdicts.map((v) => (
-                      <td key={v} className={`${td} font-mono`}>
-                        {rows.filter((r) => (r.verdict || "(not marked)") === v).length}
-                      </td>
-                    ))}
-                    <td className={`${td} font-mono`}>{rows.filter((r) => YES.test(r.invented_number ?? "")).length}</td>
-                    <td className={`${td} font-mono`}>{rows.filter((r) => YES.test(r.cited_source ?? "")).length}</td>
-                    <td className={`${td} font-mono`}>{rows.filter((r) => YES.test(r.said_not_in_evidence ?? "")).length}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
+        <EvalSummary summary={getEvalSummary()} />
       </section>
     </div>
   );

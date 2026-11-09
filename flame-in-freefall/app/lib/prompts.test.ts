@@ -40,13 +40,14 @@ describe("citations", () => {
 
 describe("demo answers", () => {
   const raw = [
-    { question: "How fast does flame spread on cotton?", answer: "x [SAF-001]", card_ids: ["SAF-001"] },
-    { question: "Missing card answer", answer: "y", card_ids: ["SAF-999"] },
+    { question: "How fast does flame spread on cotton?", answer: "x [SAF-001]", card_ids: ["SAF-001"], checked_by: "Bassam" },
+    { question: "How fast does flame spread on cotton today?", answer: "unchecked", card_ids: ["SAF-001"], checked_by: null },
+    { question: "Missing card answer", answer: "y", card_ids: ["SAF-999"], checked_by: "Bassam" },
     { question: "bad" },
   ];
   const usable = usableDemoAnswers(raw, new Set(["SAF-001"]));
 
-  it("drops malformed entries and entries citing unknown cards", () => {
+  it("drops malformed, unchecked and unknown-card entries", () => {
     expect(usable.map((a) => a.question)).toEqual(["How fast does flame spread on cotton?"]);
     expect(usableDemoAnswers({}, new Set())).toEqual([]);
   });

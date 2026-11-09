@@ -79,6 +79,15 @@ describe("computeKpis", () => {
     expect(byId(computeKpis({ ...empty, verified, decisions })).K5).toMatchObject({ now: "20% (1/5)", status: STATUS.met });
   });
 
+  it("K10–K12 read the current results.csv columns", () => {
+    const questions = [{ id: "Q1", answerable: "no" }];
+    const results = [{ id: "Q1", mode: "cards", model: "m", invented_vs_given: "", cited_cards: "", said_not_in_evidence: "yes" }];
+    const k = byId(computeKpis({ ...empty, questions, results }));
+    expect(k.K10.now).toBe("0% (0/1)");
+    expect(k.K11.now).toBe("0% (0/1)");
+    expect(k.K12.now).toBe("100% (1/1)");
+  });
+
   it("K8–K12 read questions and cards-mode results only", () => {
     const questions = [
       { q_id: "Q1", answerable: "yes" },
@@ -101,7 +110,7 @@ describe("computeKpis", () => {
   it("K13 ignores sample and unchecked answers; K14 needs checked_by on top-10 entries", () => {
     const verified = [card("SAF-001"), card("SAF-002")];
     const demoAnswers = [
-      { question: "a", answer: "x", card_ids: ["SAF-001"] },
+      { question: "a", answer: "x", card_ids: ["SAF-001"], checked_by: "Bassam" },
       { question: "b", answer: "x", card_ids: ["DEMO-001"] },
       { question: "c", answer: "x", card_ids: ["SAF-002"], checked_by: null },
     ];

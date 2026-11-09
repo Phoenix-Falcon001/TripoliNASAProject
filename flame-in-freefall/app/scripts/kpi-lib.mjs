@@ -14,7 +14,7 @@ export const STATUS = {
 };
 
 const YES = /^(y|yes|true|1)$/i;
-const CARDS_MODES = new Set(["cards", "ollama"]); // "ollama" = the cards path before WP-RITA renamed it
+const CARDS_MODES = new Set(["cards", "ollama"]); // "ollama" = the cards path in the first version of the runner
 const AI_MODES = new Set(["cards", "ollama", "plain"]);
 const EXPERIMENTS = ["SAFFIRE", "FLEX", "BASS-II"];
 
@@ -66,6 +66,11 @@ export function rankDefault(cards) {
 }
 
 const pct = (n, d) => `${Math.round((100 * n) / d)}%`;
+
+// results.csv columns (new names first, first-version names as fallback)
+const rowId = (r) => r.id ?? r.q_id ?? "";
+const invented = (r) => ("invented_vs_given" in r ? r.invented_vs_given.trim() !== "" : YES.test(r.invented_number ?? ""));
+const cited = (r) => ("cited_cards" in r ? r.cited_cards.trim() !== "" : YES.test(r.cited_source ?? ""));
 
 function row(id, name, owner, target, { now, status, note = "" }) {
   return { id, name, owner, target, deadline: id === "K16" ? "before demo" : DEADLINE, now, status, note };
@@ -172,18 +177,18 @@ export function computeKpis(d) {
       ["K12", "Correct \"Not in our evidence\" on unanswerable", "100%"],
     ]) out.push(row(id, name, "Rita", target, { now: NOT_MEASURED, status: STATUS.notMeasured, note: "no G1 results yet" }));
   } else {
-    const invented = cardsRows.filter((r) => YES.test(r.invented_number ?? "")).length;
+    const inventedN = cardsRows.filter(invented).length;
     out.push(row("K10", "Invented-number rate (cards mode)", "Rita", "0%", {
-      now: `${pct(invented, cardsRows.length)} (${invented}/${cardsRows.length})`,
-      status: invented === 0 ? STATUS.met : STATUS.progress,
+      now: `${pct(inventedN, cardsRows.length)} (${inventedN}/${cardsRows.length})`,
+      status: inventedN === 0 ? STATUS.met : STATUS.progress,
     }));
-    const cited = cardsRows.filter((r) => YES.test(r.cited_source ?? "")).length;
+    const citedN = cardsRows.filter(cited).length;
     out.push(row("K11", "Answers citing a card (cards mode)", "Rita", "≥ 95%", {
-      now: `${pct(cited, cardsRows.length)} (${cited}/${cardsRows.length})`,
-      status: cited / cardsRows.length >= 0.95 ? STATUS.met : STATUS.progress,
+      now: `${pct(citedN, cardsRows.length)} (${citedN}/${cardsRows.length})`,
+      status: citedN / cardsRows.length >= 0.95 ? STATUS.met : STATUS.progress,
     }));
     const unansIds = new Set(d.questions.filter((q) => /^no$/i.test(q.answerable ?? "")).map((q) => q.id ?? q.q_id ?? q.Q_id));
-    const unansRows = cardsRows.filter((r) => unansIds.has(r.q_id ?? r.id));
+    const unansRows = cardsRows.filter((r) => unansIds.has(rowId(r)));
     if (unansRows.length === 0) {
       out.push(row("K12", "Correct \"Not in our evidence\" on unanswerable", "Rita", "100%", { now: NOT_MEASURED, status: STATUS.notMeasured, note: "no results for unanswerable questions" }));
     } else {
@@ -198,7 +203,7 @@ export function computeKpis(d) {
   // K13 real demo answers (cite only verified cards; checked once checked_by exists)
   const demo = Array.isArray(d.demoAnswers) ? d.demoAnswers : [];
   const real = demo.filter(
-    (a) => Array.isArray(a?.card_ids) && a.card_ids.length > 0 && a.card_ids.every((id) => ids.has(id)) && !("checked_by" in a && !a.checked_by),
+    (a) => Array.isArray(a?.card_ids) && a.card_ids.length > 0 && a.card_ids.every((id) => ids.has(id)) && Boolean(a.checked_by),
   ).length;
   out.push(row("K13", "Real pre-written demo answers", "Rita + Bassam", "3–5", {
     now: String(real),

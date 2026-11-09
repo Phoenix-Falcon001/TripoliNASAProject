@@ -7,6 +7,8 @@ import type { Card } from "./types";
 export const OLLAMA_URL = "http://localhost:11434";
 export const DEFAULT_MODEL = "llama3.1:8b";
 export const MAX_QUESTION_LENGTH = 500;
+/** Generation settings for every Ollama call (app, G1 test, drafts), logged in every G1 row. */
+export const OLLAMA_OPTIONS = { temperature: 0, seed: 42 } as const;
 
 export function ollamaModel(env: Record<string, string | undefined> = process.env): string {
   return env.OLLAMA_MODEL?.trim() || DEFAULT_MODEL;
@@ -103,7 +105,7 @@ export async function* askEvents(question: string, ctx: AskContext): AsyncGenera
     res = await fetchFn(`${OLLAMA_URL}/api/generate`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ model: ctx.model, prompt: buildPrompt(cards, question), stream: true, options: { temperature: 0 } }),
+      body: JSON.stringify({ model: ctx.model, prompt: buildPrompt(cards, question), stream: true, options: OLLAMA_OPTIONS }),
       signal: controller.signal,
     });
   } catch (e) {
@@ -139,4 +141,23 @@ export async function* askEvents(question: string, ctx: AskContext): AsyncGenera
     ctx.signal?.removeEventListener("abort", onAbort);
     yield { type: "done" };
   }
+}
+
+/** One non-streaming Ollama call with the shared settings. Throws if Ollama fails. */
+export async function ollamaGenerate(
+  model: string,
+  prompt: string,
+  fetchFn: typeof fetch = fetch,
+  timeoutMs = 300_000,
+): Promise<{ text: string; seconds: number }> {
+  const t0 = Date.now();
+  const res = await fetchFn(`${OLLAMA_URL}/api/generate`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ model, prompt, stream: false, options: OLLAMA_OPTIONS }),
+    signal: AbortSignal.timeout(timeoutMs),
+  });
+  const body = (await res.json().catch(() => ({}))) as { response?: string; error?: string };
+  if (!res.ok || typeof body.response !== "string") throw new Error(body.error ?? `Ollama returned ${res.status}`);
+  return { text: body.response, seconds: (Date.now() - t0) / 1000 };
 }
