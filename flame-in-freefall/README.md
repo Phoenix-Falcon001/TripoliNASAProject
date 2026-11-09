@@ -39,10 +39,14 @@ Fill `data/eval/questions.csv`, start the app, then in another terminal:
 
     cd app && npm run eval:g1
 
-This sends every question through the same `/api/ask` (same retrieval, same prompt
-from `app/lib/prompts.ts`) and appends rows to `data/eval/results.csv` with
-`invented_number`, `cited_source` and `said_not_in_evidence` pre-filled.
-Fill in `verdict` and `marked_by` by hand; the Data page summarises the results.
+Runs every question in `data/eval/questions.csv` (`id,question,answerable,expected_card_ids,notes`)
+twice on the same model and settings: **plain** (question only) and **cards** (the exact Ask path).
+`npm run eval:g1 -- --models a,b` compares models. Rows go to `data/eval/results.csv` with auto-flags;
+fill `human_verdict` (correct/partly/wrong) and `marked_by`, then `npm run eval:summary`.
+The "Plain AI vs our evidence" table (Data, Method, Home) reads `data/eval/summary.json`.
+
+`npm run ai:drafts` drafts AI explanations (top-10 cards) and demo answers with `checked_by: null`;
+the app shows them only after a person sets `checked_by`.
 
 ### Team KPIs
 
@@ -50,6 +54,11 @@ Fill in `verdict` and `marked_by` by hand; the Data page summarises the results.
 
 Team rules: `CONTRIBUTING.md` (repo root). Work packages: `docs/TEAM_TASKS.md`.
 CI (lint, tests, build, pipeline tests) runs on every pull request.
+
+### Demo
+
+    npm run demo       # production build + start, telemetry off, Review page hidden
+    # click path and what to record: notes/demo_path.md · finishing steps: notes/finish_today.md
 
 ### Demo-day check
 
@@ -61,8 +70,11 @@ telemetry off, Ollama + model (and loads the model into memory), and a test ques
 
 ## Card pipeline
 
+    python pipeline/add_paper.py papers/S02.pdf S02 --experiment FLEX --title "..." --url "..."   # D0 new paper: sources.csv row + text
     python pipeline/extract_text.py papers/S01.pdf S01               # D1  PDF -> data/text/S01.json
+    python pipeline/draft_cards.py S01                               # D5  draft cards with Ollama (status always "draft")
     python pipeline/validate_cards.py data/drafts/S01_drafts.json    # D2  -> data/drafts/S01_checked.json
+    python pipeline/check_all.py                                     #     D2 for every drafts file + summary
     cd app && npm run dev     # then open http://localhost:3000/review  (D3 human review)
     python pipeline/promote_verified.py           # dry run: what would change
     python pipeline/promote_verified.py --write   # approved cards -> data/cards.json
