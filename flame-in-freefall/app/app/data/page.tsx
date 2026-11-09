@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import DataChart from "@/components/DataChart";
 import HazardChart from "@/components/HazardChart";
 import { experimentOf, getCardData, getEvalResults } from "@/lib/cards";
+import { getCharts } from "@/lib/chartData";
 import { CONTROL_LABELS, HAZARDS, HAZARD_LABELS } from "@/lib/types";
 
 export const metadata: Metadata = { title: "Data · Flame in Freefall" };
@@ -89,6 +91,22 @@ export default function DataPage() {
             </tbody>
           </table>
         </details>
+      </section>
+
+      <section aria-labelledby="paperdata-h" className="space-y-3">
+        <h2 id="paperdata-h" className="text-xl font-semibold">
+          Data from the papers
+        </h2>
+        {getCharts().length === 0 ? (
+          <p className="text-neutral-700">
+            No chart data yet. Charts appear here from tables typed from a paper or NASA PSI data files in{" "}
+            <code>data/chart/</code> (see <code>data/chart/README.md</code>).
+          </p>
+        ) : (
+          getCharts().map((c) => (
+            <DataChart key={c.id} spec={c} sourceTitle={sources.find((s) => s.source_id === c.source_id)?.title ?? c.source_id} />
+          ))
+        )}
       </section>
 
       <section aria-labelledby="src-h">
