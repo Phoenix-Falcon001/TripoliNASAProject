@@ -3,7 +3,17 @@ import os from "node:os";
 import path from "node:path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { cardNumbers, displayText, highlight } from "./highlight";
-import { canonicalJson, cardFingerprint, listCheckedSources, loadReviewItems, saveDecision } from "./review";
+import {
+  canonicalJson,
+  cardFingerprint,
+  editCard,
+  listCheckedSources,
+  loadReviewItems,
+  saveDecision,
+  saveSecondCheck,
+  secondCheckQueue,
+  validateEdit,
+} from "./review";
 
 // Same card and value as FIXTURE in pipeline/test_promote_verified.py.
 const FIXTURE = {
@@ -90,5 +100,62 @@ describe("review files", () => {
     expect(saveDecision("S01", "SAF-001", "verified", "Bassam", "old", dir)).toMatchObject({ ok: false });
     expect(saveDecision("S01", "SAF-999", "verified", "Bassam", "x", dir)).toMatchObject({ ok: false });
     expect(saveDecision("../x", "SAF-001", "verified", "Bassam", "x", dir)).toMatchObject({ ok: false, error: "Bad source id" });
+  });
+});
+
+describe("second checks and edits", () => {
+  let dir: string;
+  const card = { card_id: "SAF-001", source_id: "S01", page: 1, finding: "x", scores: { crew_safety: 3, evidence: 3, moon_mars: 3 } };
+  const fp = () => cardFingerprint(JSON.parse(fs.readFileSync(path.join(dir, "drafts", "S01_checked.json"), "utf8"))[0]);
+  beforeEach(() => {
+    dir = fs.mkdtempSync(path.join(os.tmpdir(), "review2-"));
+    fs.mkdirSync(path.join(dir, "drafts"));
+    for (const f of ["S01_checked.json", "S01_drafts.json"]) fs.writeFileSync(path.join(dir, "drafts", f), JSON.stringify([card]));
+  });
+  afterEach(() => fs.rmSync(dir, { recursive: true, force: true }));
+
+  it("needs a reason to flag", () => {
+    expect(saveDecision("S01", "SAF-001", "flagged", "Bassam", fp(), dir)).toMatchObject({ ok: false });
+    expect(saveDecision("S01", "SAF-001", "flagged", "Bassam", fp(), dir, new Date(), "page number wrong")).toEqual({ ok: true });
+    expect(loadReviewItems("S01", dir)[0].decision?.note).toBe("page number wrong");
+  });
+
+  it("second check: different person only; pass keeps it, fail flags it", () => {
+    saveDecision("S01", "SAF-001", "verified", "Bassam", fp(), dir);
+    expect(secondCheckQueue(loadReviewItems("S01", dir))).toHaveLength(1);
+    expect(saveSecondCheck("S01", "SAF-001", "pass", "Bassam", fp(), "", dir)).toMatchObject({ ok: false });
+    expect(saveSecondCheck("S01", "SAF-001", "pass", "Reviewer 2", fp(), "", dir)).toEqual({ ok: true });
+    const d = loadReviewItems("S01", dir)[0].decision!;
+    expect(d.status).toBe("verified");
+    expect(d.second_check).toMatchObject({ by: "Reviewer 2", result: "pass" });
+    expect(secondCheckQueue(loadReviewItems("S01", dir))).toHaveLength(0);
+
+    saveDecision("S01", "SAF-001", "verified", "Bassam", fp(), dir); // re-approval clears the old check
+    expect(loadReviewItems("S01", dir)[0].decision?.second_check).toBeUndefined();
+    expect(saveSecondCheck("S01", "SAF-001", "fail", "Reviewer 2", fp(), "", dir)).toMatchObject({ ok: false });
+    expect(saveSecondCheck("S01", "SAF-001", "fail", "Reviewer 2", fp(), "number 0.68 not on page", dir)).toEqual({ ok: true });
+    expect(loadReviewItems("S01", dir)[0].decision).toMatchObject({ status: "flagged", note: expect.stringContaining("0.68") });
+  });
+
+  it("only an approved card can be second-checked", () => {
+    expect(saveSecondCheck("S01", "SAF-001", "pass", "Reviewer 2", fp(), "", dir)).toMatchObject({ ok: false });
+  });
+
+  it("Evidence lead edits change both files and make the approval stale", () => {
+    saveDecision("S01", "SAF-001", "verified", "Rita", fp(), dir);
+    const edit = { scores: { crew_safety: 5, evidence: 4, moon_mars: 2 }, open_question: " Is it? ", related_cards: [{ card_id: "FLX-002", relation: "conflicts" as const }] };
+    expect(editCard("S01", "SAF-001", edit, "Rita", fp(), dir)).toMatchObject({ ok: false });
+    expect(editCard("S01", "SAF-001", edit, "Bassam", fp(), dir)).toEqual({ ok: true });
+    for (const f of ["S01_checked.json", "S01_drafts.json"]) {
+      const c = JSON.parse(fs.readFileSync(path.join(dir, "drafts", f), "utf8"))[0];
+      expect(c).toMatchObject({ scores: edit.scores, open_question: "Is it?", related_cards: edit.related_cards });
+    }
+    expect(loadReviewItems("S01", dir)[0].stale).toBe(true);
+  });
+
+  it("validateEdit rejects bad scores and related ids", () => {
+    expect(validateEdit({ scores: { crew_safety: 6, evidence: 1, moon_mars: 1 } })).toMatch(/1–5/);
+    expect(validateEdit({ related_cards: [{ card_id: "DEMO-001", relation: "agrees" }] })).toMatch(/SAF-001/);
+    expect(validateEdit({ open_question: null })).toBeNull();
   });
 });
