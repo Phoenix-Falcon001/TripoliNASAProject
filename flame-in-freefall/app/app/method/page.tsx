@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import EvalSummary from "@/components/EvalSummary";
 import { AiExplanation, NasaFound, OurReading } from "@/components/Layers";
 import { DEFAULT_MODEL } from "@/lib/ask";
+import { getEvalSummary } from "@/lib/evalSummary";
 import { STRICT_PROMPT } from "@/lib/prompts";
 import { DEFAULT_WEIGHTS } from "@/lib/rank";
 import { STABLE_THRESHOLD, TOP_N, weightCombos } from "@/lib/stability";
@@ -89,6 +91,14 @@ export default function MethodPage() {
           <li>The answer must cite card IDs. The app warns if it cites a card it was not given, or cites none.</li>
           <li>If the AI is offline, the app shows a pre-written answer (if one matches) or just the most relevant cards.</li>
         </ul>
+        <h3 className="mt-4 font-semibold">Does it help? Plain AI vs our evidence</h3>
+        <p className="mt-1 text-neutral-700">
+          We ask the same questions to the same local model twice: once with the question only, once with our verified cards. Some
+          questions are ones our cards cannot answer, to check that it says &quot;Not in our evidence&quot; instead of guessing.
+        </p>
+        <div className="mt-2">
+          <EvalSummary summary={getEvalSummary()} />
+        </div>
         <h3 className="mt-4 font-semibold">The exact prompt</h3>
         <pre className="mt-1 overflow-x-auto whitespace-pre-wrap rounded bg-neutral-100 p-3 text-sm">{STRICT_PROMPT}</pre>
       </section>

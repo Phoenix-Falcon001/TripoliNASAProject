@@ -1,103 +1,102 @@
-// G1 accuracy test. Sends every question in data/eval/questions.csv to the running
-// app's /api/ask (same retrieval + same strict prompt as the Ask page) and appends
-// one row per question to data/eval/results.csv.
+// G1 accuracy test: "plain AI" vs "our evidence" on the SAME model and settings.
 //
-// Usage (app must be running, e.g. `npm run dev` in another terminal):
-//   npm run eval:g1                       # uses http://localhost:3000
-//   npm run eval:g1 -- http://localhost:3001
+//   npm run eval:g1                                   # model from OLLAMA_MODEL (or llama3.1:8b)
+//   npm run eval:g1 -- --models llama3.1:8b,qwen2.5:7b
+//   npm run eval:g1 -- --url http://localhost:3001 --allow-sample
+//   npm run eval:summary                              # recompute summary.json after marking verdicts
 //
-// Columns filled automatically: q_id, mode, model, answer, invented_number,
-// cited_source, said_not_in_evidence. A human then fills verdict and marked_by.
+// Needs the app running (npm run dev or npm start) and Ollama. For every question in
+// data/eval/questions.csv and every model, runs mode "plain" (question only) and mode
+// "cards" (the exact Ask path) via the app's /api/eval, appends rows to
+// data/eval/results.csv, and writes data/eval/summary.json. Humans then fill human_verdict
+// (correct / partly / wrong) and marked_by, and run `npm run eval:summary`.
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { RESULT_COLUMNS, parseCsv, summarize, toResultRow, validateQuestions } from "./eval-lib.mjs";
 
-const here = path.dirname(fileURLToPath(import.meta.url));
-const EVAL_DIR = path.resolve(here, "..", "..", "data", "eval");
-const BASE = process.argv[2] ?? "http://localhost:3000";
-const COLS = ["q_id", "mode", "model", "answer", "verdict", "invented_number", "cited_source", "said_not_in_evidence", "marked_by"];
+const EVAL = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..", "..", "data", "eval");
+const QUESTIONS = path.join(EVAL, "questions.csv");
+const RESULTS = path.join(EVAL, "results.csv");
+const SUMMARY = path.join(EVAL, "summary.json");
 
-function parseCsv(text) {
-  const rows = [];
-  let row = [], field = "", q = false;
-  for (let i = 0; i < text.length; i++) {
-    const ch = text[i];
-    if (q) {
-      if (ch === '"' && text[i + 1] === '"') { field += '"'; i++; }
-      else if (ch === '"') q = false;
-      else field += ch;
-    } else if (ch === '"') q = true;
-    else if (ch === ",") { row.push(field); field = ""; }
-    else if (ch === "\n" || ch === "\r") {
-      if (ch === "\r" && text[i + 1] === "\n") i++;
-      row.push(field); rows.push(row); row = []; field = "";
-    } else field += ch;
+const args = process.argv.slice(2);
+const flag = (name) => {
+  const i = args.indexOf(name);
+  return i >= 0 ? args[i + 1] : undefined;
+};
+const url = flag("--url") ?? "http://localhost:3000";
+const models = (flag("--models") ?? process.env.OLLAMA_MODEL ?? "llama3.1:8b").split(",").map((m) => m.trim()).filter(Boolean);
+const allowSample = args.includes("--allow-sample");
+const summaryOnly = args.includes("--summary-only");
+
+const { questions, errors } = validateQuestions(fs.existsSync(QUESTIONS) ? fs.readFileSync(QUESTIONS, "utf8") : "");
+if (errors.length) {
+  console.error("Fix data/eval/questions.csv first:\n  " + errors.join("\n  "));
+  process.exit(1);
+}
+
+function writeSummary() {
+  const results = fs.existsSync(RESULTS) ? parseCsv(fs.readFileSync(RESULTS, "utf8")) : [];
+  const s = summarize(results, questions, new Date().toISOString());
+  fs.writeFileSync(SUMMARY, JSON.stringify(s, null, 2) + "\n");
+  console.log(`\nWrote ${path.relative(process.cwd(), SUMMARY)}`);
+  for (const [model, modes] of Object.entries(s.models)) {
+    for (const [mode, m] of Object.entries(modes)) {
+      const f = (v) => (v === null ? "not measured" : `${v}%`);
+      console.log(`  ${model} · ${mode.padEnd(5)}  invented numbers ${f(m.invented_numbers_pct)} · cites a card ${f(m.cites_a_card_pct)} · ` +
+        `"Not in our evidence" on unanswerable ${f(m.not_in_evidence_correct_pct)} · median ${m.median_seconds ?? "-"} s`);
+    }
   }
-  if (field || row.length) { row.push(field); rows.push(row); }
-  const [header, ...body] = rows.filter((r) => r.some((f) => f.trim()));
-  return header ? body.map((r) => Object.fromEntries(header.map((h, i) => [h.trim(), (r[i] ?? "").trim()]))) : [];
 }
 
-const csvField = (s) => (/[",\n\r]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s);
-const yn = (b) => (b ? "yes" : "no");
-
-/** Numbers in the answer that appear nowhere in the cards it was given (card IDs ignored). */
-function inventedNumbers(answer, cards) {
-  const cardText = JSON.stringify(cards);
-  const nums = answer.replace(/\[(SAF|FLX|BAS|DEMO)-\d{3}\]/g, "").match(/\d+(?:[.,]\d+)*/g) ?? [];
-  return nums.filter((n) => !cardText.includes(n) && !cardText.includes(n.replace(/,/g, "")));
+if (summaryOnly) {
+  writeSummary();
+  process.exit(0);
 }
-
-async function ask(question) {
-  const res = await fetch(`${BASE}/api/ask`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ question }),
-  });
-  if (!res.ok) throw new Error(`HTTP ${res.status}: ${await res.text()}`);
-  let cards = [], mode = "", model = "", answer = "";
-  for (const line of (await res.text()).split("\n")) {
-    if (!line.trim()) continue;
-    const e = JSON.parse(line);
-    if (e.type === "cards") cards = e.cards;
-    else if (e.type === "ai") { mode = "ollama"; model = e.model; }
-    else if (e.type === "token") answer += e.text;
-    else if (e.type === "fallback") { mode = e.mode; answer = e.text; }
-    else if (e.type === "error") answer += `\n[ERROR: ${e.message}]`;
-  }
-  return { cards, mode, model, answer };
-}
-
-const questions = parseCsv(fs.readFileSync(path.join(EVAL_DIR, "questions.csv"), "utf8"));
 if (questions.length === 0) {
-  console.log("data/eval/questions.csv has no questions yet. Add rows: Q_id,question,answerable,expected_answer,expected_cards");
+  console.log("data/eval/questions.csv has no questions yet (columns: id,question,answerable,expected_card_ids,notes).");
   process.exit(0);
 }
 
-const out = path.join(EVAL_DIR, "results.csv");
-if (!fs.existsSync(out) || !fs.readFileSync(out, "utf8").trim()) fs.writeFileSync(out, COLS.join(",") + "\n");
+const header = RESULT_COLUMNS.join(",");
+if (!fs.existsSync(RESULTS) || fs.readFileSync(RESULTS, "utf8").split(/\r?\n/)[0] !== header) {
+  if (fs.existsSync(RESULTS) && parseCsv(fs.readFileSync(RESULTS, "utf8")).length > 0) {
+    fs.renameSync(RESULTS, RESULTS.replace(/\.csv$/, `.old-${Date.now()}.csv`));
+    console.log("Old results.csv had different columns; kept it as results.old-*.csv");
+  }
+  fs.writeFileSync(RESULTS, header + "\n");
+}
 
-for (const q of questions) {
-  const id = q.Q_id ?? q.q_id ?? "";
-  process.stdout.write(`${id}: ${q.question} ... `);
-  try {
-    const r = await ask(q.question);
-    const invented = inventedNumbers(r.answer, r.cards);
-    const row = {
-      q_id: id,
-      mode: r.mode,
-      model: r.model,
-      answer: r.answer.trim(),
-      verdict: "",
-      invented_number: yn(invented.length > 0),
-      cited_source: yn(/\[(SAF|FLX|BAS|DEMO)-\d{3}\]/.test(r.answer)),
-      said_not_in_evidence: yn(/not in our evidence/i.test(r.answer)),
-      marked_by: "",
-    };
-    fs.appendFileSync(out, COLS.map((c) => csvField(row[c])).join(",") + "\n");
-    console.log(`${r.mode}${invented.length ? ` (numbers not in cards: ${invented.join(", ")})` : ""}`);
-  } catch (e) {
-    console.log(`FAILED: ${e.message}`);
+const runAt = new Date().toISOString();
+let failed = 0;
+for (const model of models) {
+  console.log(`\nModel ${model}`);
+  for (const q of questions) {
+    for (const mode of ["plain", "cards"]) {
+      process.stdout.write(`  ${q.id} ${mode.padEnd(5)} ... `);
+      try {
+        const res = await fetch(`${url}/api/eval`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ mode, question: q.question, model, allow_sample: allowSample }),
+        });
+        const r = await res.json();
+        if (!res.ok) throw new Error(r.error ?? `HTTP ${res.status}`);
+        fs.appendFileSync(RESULTS, toResultRow(q, r, runAt, allowSample) + "\n");
+        const inv = r.flags.invented_vs_all.length ? ` · numbers not in our evidence: ${r.flags.invented_vs_all.join(", ")}` : "";
+        console.log(`${r.mode}${r.seconds != null ? ` (${r.seconds.toFixed(1)} s)` : ""}${inv}`);
+      } catch (e) {
+        failed++;
+        console.log(`FAILED: ${e.message}`);
+        if (/fetch failed|ECONNREFUSED/.test(e.message)) {
+          console.error(`\nThe app is not running at ${url}. Start it with: npm run dev`);
+          process.exit(1);
+        }
+      }
+    }
   }
 }
-console.log(`\nAppended to ${path.relative(process.cwd(), out)}. Now fill in 'verdict' and 'marked_by' by hand.`);
+writeSummary();
+console.log(`\nNext: open data/eval/results.csv, fill human_verdict (correct/partly/wrong) and marked_by, then run: npm run eval:summary`);
+process.exit(failed ? 1 : 0);

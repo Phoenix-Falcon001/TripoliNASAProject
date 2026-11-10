@@ -6,6 +6,10 @@ export interface DemoAnswer {
   answer: string;
   /** Every card the answer cites. Entries citing cards not in the current set are ignored. */
   card_ids: string[];
+  /** Who checked this AI-written answer. Entries are shown only once this is set. */
+  checked_by?: string | null;
+  model?: string;
+  drafted_at?: string;
 }
 
 export function isDemoAnswer(x: unknown): x is DemoAnswer {
@@ -19,10 +23,13 @@ export function isDemoAnswer(x: unknown): x is DemoAnswer {
   );
 }
 
-/** Keeps well-formed entries whose cited cards all exist in the shown card set. */
+/** Keeps well-formed, human-checked entries whose cited cards all exist in the shown card set. */
 export function usableDemoAnswers(raw: unknown, cardIds: ReadonlySet<string>): DemoAnswer[] {
   if (!Array.isArray(raw)) return [];
-  return raw.filter(isDemoAnswer).filter((d) => d.card_ids.length > 0 && d.card_ids.every((id) => cardIds.has(id)));
+  return raw
+    .filter(isDemoAnswer)
+    .filter((d) => typeof d.checked_by === "string" && d.checked_by.trim() !== "")
+    .filter((d) => d.card_ids.length > 0 && d.card_ids.every((id) => cardIds.has(id)));
 }
 
 function jaccard(a: Set<string>, b: Set<string>): number {

@@ -3,6 +3,7 @@ import CardSummary from "@/components/CardSummary";
 import { LayerBadge } from "@/components/Layers";
 import StabilityBadge from "@/components/StabilityBadge";
 import { experimentOf, getCardData, getStability } from "@/lib/cards";
+import { getEvalSummary, headline } from "@/lib/evalSummary";
 import { formatScore, rankCards } from "@/lib/rank";
 
 export default function Home() {
@@ -11,6 +12,8 @@ export default function Home() {
   const stab = getStability();
   const experiments = new Set(cards.map((c) => experimentOf(data, c)));
   const top = rankCards(cards).slice(0, 5);
+  const papers = new Set(cards.map((c) => c.source_id)).size;
+  const g1 = headline(getEvalSummary());
 
   return (
     <div className="space-y-8">
@@ -20,9 +23,35 @@ export default function Home() {
           What NASA&apos;s fire-in-space experiments (SAFFIRE, FLEX, BASS-II) tell us about crew safety — each finding checked
           against its source page, ranked, and clearly separated from our own reading and from AI text.
         </p>
-        <p className="mt-3 text-neutral-700">
-          {cards.length} verified {isSample ? "sample " : ""}cards from {experiments.size} experiments.
-        </p>
+        <dl className="mt-4 grid max-w-3xl grid-cols-1 gap-3 sm:grid-cols-3">
+          <div className="rounded-md border border-neutral-200 p-3">
+            <dt className="text-sm text-neutral-600">{isSample ? "Sample cards (not real)" : "Verified evidence cards"}</dt>
+            <dd className="text-3xl font-bold">{cards.length}</dd>
+          </div>
+          <div className="rounded-md border border-neutral-200 p-3">
+            <dt className="text-sm text-neutral-600">NASA papers · experiments</dt>
+            <dd className="text-3xl font-bold">
+              {papers} <span className="text-lg font-normal text-neutral-600">· {experiments.size}</span>
+            </dd>
+          </div>
+          <div className="rounded-md border border-neutral-200 p-3">
+            <dt className="text-sm text-neutral-600">Answers with an invented number (G1)</dt>
+            <dd>
+              {g1 ? (
+                <>
+                  <span className="text-xl font-bold">
+                    {g1.plain}% → {g1.cards}%
+                  </span>
+                  <span className="block text-xs text-neutral-600">
+                    plain AI → with our cards ({g1.model}){g1.sample ? " · SAMPLE run" : ""}
+                  </span>
+                </>
+              ) : (
+                <span className="text-lg font-semibold text-neutral-600">not measured yet</span>
+              )}
+            </dd>
+          </div>
+        </dl>
         <div className="mt-4 flex flex-wrap gap-3">
           <Link href="/explore" className="rounded bg-neutral-900 px-5 py-2.5 font-semibold text-white hover:bg-neutral-700">
             Explore the evidence →

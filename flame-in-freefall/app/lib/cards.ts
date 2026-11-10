@@ -5,6 +5,7 @@ import path from "node:path";
 import { cache } from "react";
 import Ajv2020 from "ajv/dist/2020";
 import type { ErrorObject } from "ajv";
+import { checkedText } from "./aiText";
 import { parseCsv } from "./csv";
 import { usableDemoAnswers, type DemoAnswer } from "./demoAnswers";
 import { stability } from "./stability";
@@ -170,18 +171,14 @@ export function experimentOf(data: CardData, card: Card): string {
 }
 
 /**
- * Pre-written AI explanation from data/ai_cache.json, keyed by card_id.
- * Accepts either a string or an object with a `text` field. Returns null if none.
+ * AI explanation from data/ai_cache.json, keyed by card_id: { text, checked_by, ... }.
+ * Returns null unless a person has checked it (checked_by set).
  */
 export const getAiExplanation = cache((cardId: string): string | null => {
   const file = path.join(DATA_DIR, "ai_cache.json");
   if (!fs.existsSync(file)) return null;
   try {
-    const entry = (readJson(file) as Record<string, unknown>)[cardId];
-    if (typeof entry === "string") return entry;
-    if (entry && typeof entry === "object" && typeof (entry as { text?: unknown }).text === "string") {
-      return (entry as { text: string }).text;
-    }
+    return checkedText((readJson(file) as Record<string, unknown>)[cardId]);
   } catch (e) {
     console.error("[cards] ai_cache.json is not valid JSON:", e);
   }
@@ -211,5 +208,3 @@ export const getDemoAnswers = cache(() =>
   loadDemoAnswers(DATA_DIR, new Set(getCardData().cards.map((c) => c.card_id))),
 );
 
-/** Rows of data/eval/results.csv (G1 accuracy test). Empty if not run yet. */
-export const getEvalResults = cache(() => readCsv(path.join(DATA_DIR, "eval", "results.csv")));

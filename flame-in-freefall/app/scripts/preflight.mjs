@@ -8,7 +8,9 @@ import { execFileSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import os from "node:os";
 import AjvModule from "ajv/dist/2020.js";
+import { rankDefault } from "./kpi-lib.mjs";
 
 const Ajv2020 = AjvModule.default ?? AjvModule;
 const APP = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
@@ -80,19 +82,28 @@ if (verified.length) {
 }
 
 const demo = readJson(path.join(DATA, "demo_answers.json"), []);
-const usableDemo = Array.isArray(demo) ? demo.filter((d) => d?.card_ids?.length && d.card_ids.every((id) => ids.has(id))) : [];
+const citesVerified = (d) => d?.card_ids?.length && d.card_ids.every((id) => ids.has(id));
+const usableDemo = Array.isArray(demo) ? demo.filter((d) => citesVerified(d) && d.checked_by) : [];
+const uncheckedDemo = Array.isArray(demo) ? demo.filter((d) => citesVerified(d) && !d.checked_by) : [];
 const sampleDemo = Array.isArray(demo) ? demo.filter((d) => d?.card_ids?.some((id) => String(id).startsWith("DEMO-"))) : [];
-(usableDemo.length ? ok : warn)(`${usableDemo.length} pre-written answers usable when Ollama is offline`);
+(usableDemo.length >= 3 ? ok : warn)(`${usableDemo.length} checked pre-written answers for when Ollama is offline (target 3–5)`);
+if (uncheckedDemo.length) warn(`${uncheckedDemo.length} drafted answers in demo_answers.json are not checked yet (set "checked_by")`);
 if (verified.length && sampleDemo.length) warn(`demo_answers.json still has ${sampleDemo.length} SAMPLE entries (ignored, but tidy up)`);
 
 const aiCache = readJson(path.join(DATA, "ai_cache.json"), {});
-const explained = verified.filter((c) => aiCache[c.card_id]).length;
-if (verified.length) (explained === verified.length ? ok : warn)(`${explained}/${verified.length} cards have an AI explanation in ai_cache.json`);
+if (verified.length) {
+  const top = rankDefault(verified).slice(0, 10);
+  const checked = top.filter((c) => aiCache[c.card_id]?.checked_by).length;
+  (checked === top.length ? ok : warn)(`${checked}/${top.length} top cards have a checked AI explanation (unchecked ones are hidden)`);
+  const unchecked = Object.values(aiCache).filter((e) => e && typeof e === "object" && !e.checked_by).length;
+  if (unchecked) warn(`${unchecked} AI explanations in ai_cache.json are not checked yet (set "checked_by")`);
+}
 
-const evalRows = fs.existsSync(path.join(DATA, "eval", "results.csv"))
-  ? fs.readFileSync(path.join(DATA, "eval", "results.csv"), "utf8").split(/\r?\n/).filter((l) => l.trim()).length - 1
-  : 0;
-(evalRows > 0 ? ok : warn)(`G1 results: ${Math.max(0, evalRows)} rows in data/eval/results.csv`);
+const summary = readJson(path.join(DATA, "eval", "summary.json"), null);
+const summaryModels = summary?.models ? Object.values(summary.models) : [];
+if (summaryModels.length === 0) warn("G1 not run: no data/eval/summary.json (the app shows \"not measured yet\") — run: npm run eval:g1");
+else if (summaryModels.some((m) => m.plain?.sample_data || m.cards?.sample_data)) fail("data/eval/summary.json is from a SAMPLE run — re-run npm run eval:g1 on real cards");
+else ok(`G1 summary present (${Object.keys(summary.models).join(", ")}, ${summary.questions} questions)`);
 
 // ---------- 2. Build ----------
 section("Build");
@@ -178,6 +189,17 @@ if (APP_URL) {
   } catch (e) {
     fail(`App not reachable at ${APP_URL} (${e.message}) — start it with: npm start`);
   }
+}
+
+// ---------- 5. Offline ----------
+section("Offline");
+const online = Object.entries(os.networkInterfaces()).flatMap(([name, addrs]) =>
+  (addrs ?? []).filter((a) => !a.internal && a.family === "IPv4" && !a.address.startsWith("169.254.")).map((a) => `${name} ${a.address}`),
+);
+if (online.length) {
+  warn(`This computer is on a network (${online.join(", ")}). For the final check turn Wi-Fi off and run preflight again.`);
+} else {
+  ok("No network connection: everything above ran fully offline");
 }
 
 // ---------- Report ----------

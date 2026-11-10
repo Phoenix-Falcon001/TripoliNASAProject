@@ -3,6 +3,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { AiExplanation, NasaFound, OurReading } from "@/components/Layers";
 import StabilityBadge from "@/components/StabilityBadge";
+import TrustBadges from "@/components/TrustBadges";
+import { getDecisions, trustBadges } from "@/lib/trust";
 import { experimentOf, findCard, findSource, getAiExplanation, getCardData, getStability } from "@/lib/cards";
 import { DEFAULT_WEIGHTS, formatScore, rankCards } from "@/lib/rank";
 import { CONTROL_LABELS, HAZARD_LABELS, type Relation } from "@/lib/types";
@@ -62,11 +64,10 @@ export default async function CardPage({ params }: PageProps<"/card/[id]">) {
         <p className="mt-1 flex flex-wrap gap-2 text-sm">
           <span className="rounded bg-neutral-200 px-2 py-0.5">Hazard: {HAZARD_LABELS[card.hazard]}</span>
           <span className="rounded bg-neutral-200 px-2 py-0.5">Control: {CONTROL_LABELS[card.control_category]}</span>
-          <span className="rounded bg-neutral-200 px-2 py-0.5">
-            Reviewed by: {card.reviewed_by ?? "—"}
-            {card.expert_checked ? " · expert checked" : ""}
-          </span>
         </p>
+        <div className="mt-2">
+          <TrustBadges badges={trustBadges(card, getDecisions()[card.card_id])} />
+        </div>
       </div>
 
       <NasaFound title="Finding">

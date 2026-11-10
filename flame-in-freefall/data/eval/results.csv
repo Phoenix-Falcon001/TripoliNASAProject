@@ -1,1 +1,1 @@
-q_id,mode,model,answer,verdict,invented_number,cited_source,said_not_in_evidence,marked_by
+run_at,id,mode,model,settings,question,answer,given_cards,cited_cards,invented_vs_given,invented_vs_all,missing_citation,said_not_in_evidence,seconds,sample_data,human_verdict,marked_by

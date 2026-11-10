@@ -3,16 +3,19 @@
 import { useMemo, useState } from "react";
 import CardSummary from "@/components/CardSummary";
 import StabilityBadge from "@/components/StabilityBadge";
+import TrustBadges from "@/components/TrustBadges";
 import WeightSliders from "@/components/WeightSliders";
 import { NO_FILTERS, NO_MATERIAL, distinct, filterItems, type CardFilters } from "@/lib/filter";
 import { DEFAULT_WEIGHTS, formatScore, rankCards, type Weights } from "@/lib/rank";
 import type { Stability } from "@/lib/stability";
+import type { TrustBadge } from "@/lib/trust";
 import { CONTROL_CATEGORIES, CONTROL_LABELS, HAZARDS, HAZARD_LABELS, type Card } from "@/lib/types";
 
 export interface ExploreItem {
   card: Card;
   experiment: string;
   stability?: Stability;
+  trust: TrustBadge[];
 }
 
 interface Option {
@@ -125,7 +128,7 @@ export default function ExploreList({ items }: { items: ExploreItem[] }) {
         <p className="mt-6 text-neutral-700">No cards match these filters.</p>
       ) : (
         <ol className="space-y-3">
-          {shown.map(({ card, score, rank, experiment, stability }) => (
+          {shown.map(({ card, score, rank, experiment, stability, trust }) => (
             <li key={card.card_id}>
               <CardSummary
                 card={card}
@@ -149,6 +152,9 @@ export default function ExploreList({ items }: { items: ExploreItem[] }) {
                 <div className="mt-2 flex flex-wrap items-center gap-2 text-sm text-neutral-600">
                   <StabilityBadge s={stability} />
                   {card.material_or_fuel && <span>Material: {card.material_or_fuel}</span>}
+                </div>
+                <div className="mt-2">
+                  <TrustBadges badges={trust} compact />
                 </div>
               </CardSummary>
             </li>

@@ -11,7 +11,10 @@
     "test:watch": "vitest",
     "eval:g1": "node scripts/eval-g1.mjs",
     "preflight": "node scripts/preflight.mjs",
-    "kpi": "node scripts/kpi.mjs"
+    "kpi": "node scripts/kpi.mjs",
+    "eval:summary": "node scripts/eval-g1.mjs --summary-only",
+    "ai:drafts": "node scripts/ai-drafts.mjs",
+    "demo": "node scripts/demo.mjs"
   },
   "dependencies": {
     "ajv": "^8.20.0",

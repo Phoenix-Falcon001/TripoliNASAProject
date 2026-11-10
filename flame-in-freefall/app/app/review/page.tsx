@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import ReviewActions from "@/components/ReviewActions";
+import ReviewActions, { type EditableFields } from "@/components/ReviewActions";
 import { cardNumbers, highlight } from "@/lib/highlight";
 import {
   listCheckedSources,
   loadPageTexts,
   loadReviewItems,
   reviewEnabled,
+  secondCheckQueue,
   type DraftCard,
   type ReviewItem,
 } from "@/lib/review";
@@ -19,6 +20,8 @@ const STATUS_LABEL = { verified: "✓ approved", flagged: "⚑ flagged", rejecte
 
 function itemState(i: ReviewItem): string {
   if (i.stale) return "↻ changed — review again";
+  const sc = i.decision?.second_check;
+  if (i.decision?.status === "verified" && sc?.result === "pass") return `✓✓ approved + second-checked`;
   if (i.decision) return STATUS_LABEL[i.decision.status];
   return (i.card.auto_check?.reasons?.length ?? 0) > 0 ? "• auto-check flags" : "• to review";
 }
@@ -103,17 +106,25 @@ python pipeline/validate_cards.py data/drafts/S01_drafts.json`}
     );
   }
 
-  const items = loadReviewItems(source);
+  const allItems = loadReviewItems(source);
+  const queue2 = secondCheckQueue(allItems);
+  const mode = sp.view === "second" ? "second" : "review";
+  const items = mode === "second" ? queue2 : allItems;
   const pages = loadPageTexts(source);
   const selectedIdx = Math.max(
     0,
     items.findIndex((i) => i.card.card_id === sp.card),
   );
   const item = items[selectedIdx];
-  const done = items.filter((i) => i.decision && !i.stale).length;
-  const approved = items.filter((i) => i.decision?.status === "verified" && !i.stale).length;
-  const href = (i: ReviewItem) => `/review?source=${source}&card=${i.card.card_id}`;
-  const nextOpen = items.slice(selectedIdx + 1).concat(items.slice(0, selectedIdx)).find((i) => !i.decision || i.stale);
+  const done = allItems.filter((i) => i.decision && !i.stale).length;
+  const approved = allItems.filter((i) => i.decision?.status === "verified" && !i.stale).length;
+  const checked2 = allItems.filter((i) => i.decision?.status === "verified" && !i.stale && i.decision.second_check?.result === "pass").length;
+  const viewParam = mode === "second" ? "&view=second" : "";
+  const href = (i: ReviewItem) => `/review?source=${source}${viewParam}&card=${i.card.card_id}`;
+  const after = items.slice(selectedIdx + 1).concat(items.slice(0, selectedIdx));
+  const nextOpen = mode === "second" ? after.find((i) => i !== item) : after.find((i) => !i.decision || i.stale);
+  const nextAny = items.length > 1 ? items[(selectedIdx + 1) % items.length] : null;
+  const scores = (item?.card.scores ?? {}) as Record<string, number>;
 
   const pageText = item ? pages[String(item.card.page)] : undefined;
   const hl =
@@ -149,9 +160,30 @@ python pipeline/validate_cards.py data/drafts/S01_drafts.json`}
           ))}
         </nav>
         <span className="text-sm text-neutral-600">
-          {done}/{items.length} reviewed · {approved} approved
+          {done}/{allItems.length} reviewed · {approved} approved · {checked2} second-checked
         </span>
+        <nav aria-label="Queues" className="ml-auto flex gap-1 text-sm">
+          <Link
+            href={`/review?source=${source}`}
+            aria-current={mode === "review" ? "page" : undefined}
+            className={`rounded px-2 py-1 ${mode === "review" ? "bg-neutral-900 text-white" : "border border-neutral-300"}`}
+          >
+            Review queue
+          </Link>
+          <Link
+            href={`/review?source=${source}&view=second`}
+            aria-current={mode === "second" ? "page" : undefined}
+            className={`rounded px-2 py-1 ${mode === "second" ? "bg-neutral-900 text-white" : "border border-neutral-300"}`}
+          >
+            Second check ({queue2.length})
+          </Link>
+        </nav>
       </div>
+      {mode === "second" && items.length === 0 && (
+        <p className="rounded border border-neutral-300 bg-neutral-50 p-3">
+          Nothing to second-check in {source}: every approved card has been checked by a second person (or none are approved yet).
+        </p>
+      )}
 
       <div className="grid gap-4 lg:grid-cols-[14rem_1fr]">
         <ol className="space-y-1 text-sm">
@@ -177,16 +209,36 @@ python pipeline/validate_cards.py data/drafts/S01_drafts.json`}
               {item.decision && (
                 <span className="text-xs text-neutral-500">
                   by {item.decision.reviewed_by}, {item.decision.decided_at.slice(0, 16).replace("T", " ")}
+                  {item.decision.second_check &&
+                    ` · second check ${item.decision.second_check.result} by ${item.decision.second_check.by}`}
                 </span>
               )}
             </div>
+            {item.decision?.note && !item.stale && (
+              <p className="rounded border border-amber-300 bg-amber-50 p-2 text-sm">
+                <strong>Note:</strong> {item.decision.note}
+              </p>
+            )}
 
             <ReviewActions
               source={source}
               cardId={String(item.card.card_id)}
               fingerprint={item.fingerprint}
               current={item.stale ? null : (item.decision?.status ?? null)}
-              nextHref={nextOpen ? href(nextOpen) : null}
+              approvedBy={item.decision?.reviewed_by ?? null}
+              mode={mode}
+              nextHref={nextAny ? href(nextAny) : null}
+              nextOpenHref={nextOpen ? href(nextOpen) : null}
+              fields={{
+                scores: {
+                  crew_safety: scores.crew_safety ?? 3,
+                  evidence: scores.evidence ?? 3,
+                  moon_mars: scores.moon_mars ?? 3,
+                },
+                open_question: (item.card.open_question as string | null) ?? null,
+                related_cards: (item.card.related_cards as EditableFields["related_cards"] | undefined) ?? [],
+              }}
+              key={`${item.card.card_id}-${item.fingerprint}`}
             />
 
             {(item.card.auto_check?.reasons?.length ?? 0) > 0 ? (

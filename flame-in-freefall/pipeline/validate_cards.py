@@ -113,26 +113,35 @@ def check_card(card: dict, pages: dict[str, str], validator) -> dict:
     return card
 
 
-def main() -> None:
-    if len(sys.argv) != 2:
-        sys.exit("Usage: python pipeline/validate_cards.py data/drafts/<SXX>_drafts.json")
-    drafts_path = Path(sys.argv[1])
+def validate_file(drafts_path: Path, root: Path = ROOT) -> tuple[list[dict], Path]:
+    """Checks every card in a drafts file and writes <SXX>_checked.json next to it.
+    Raises FileNotFoundError if a source's extracted text is missing."""
     cards = json.loads(drafts_path.read_text(encoding="utf-8"))
-    schema = json.loads((ROOT / "schema" / "card.schema.json").read_text(encoding="utf-8"))
+    schema = json.loads((root / "schema" / "card.schema.json").read_text(encoding="utf-8"))
     validator = Draft202012Validator(schema)
 
     text_cache: dict[str, dict] = {}
     for card in cards:
         sid = card.get("source_id", "")
         if sid not in text_cache:
-            tp = ROOT / "data" / "text" / f"{sid}.json"
+            tp = root / "data" / "text" / f"{sid}.json"
             if not tp.exists():
-                sys.exit(f"Missing {tp} - run extract_text.py for {sid} first.")
+                raise FileNotFoundError(f"Missing {tp} - run extract_text.py for {sid} first.")
             text_cache[sid] = json.loads(tp.read_text(encoding="utf-8"))
         check_card(card, text_cache[sid], validator)
 
     out = drafts_path.with_name(drafts_path.name.replace("_drafts", "_checked"))
     out.write_text(json.dumps(cards, ensure_ascii=False, indent=2), encoding="utf-8")
+    return cards, out
+
+
+def main() -> None:
+    if len(sys.argv) != 2:
+        sys.exit("Usage: python pipeline/validate_cards.py data/drafts/<SXX>_drafts.json")
+    try:
+        cards, out = validate_file(Path(sys.argv[1]))
+    except FileNotFoundError as e:
+        sys.exit(str(e))
 
     ok = [c for c in cards if c["status"] == "draft"]
     flagged = [c for c in cards if c["status"] == "flagged"]

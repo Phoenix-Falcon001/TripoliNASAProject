@@ -32,3 +32,22 @@ export function buildPrompt(cards: readonly Card[], question: string): string {
   // Function replacers so "$" in card text is never treated as a replacement pattern.
   return STRICT_PROMPT.replace("{cards}", () => cardText).replace("{question}", () => question.trim());
 }
+
+// G1 "plain" mode: the same model, the question only, no cards.
+export const PLAIN_PROMPT = `Answer the question. If you are not sure, say so.
+Question: {question}`;
+
+export function buildPlainPrompt(question: string): string {
+  return PLAIN_PROMPT.replace("{question}", () => question.trim());
+}
+
+// Per-card AI explanation (data/ai_cache.json). Shown in the app only after a human checks it.
+export const EXPLAIN_PROMPT = `Explain this evidence card in 2-3 plain sentences for a non-expert.
+- Use ONLY the card. Do not add any number, fact or advice that is not on the card.
+- Say what NASA found first. If you mention the team's reading, say it is the team's reading, not NASA guidance.
+Card:
+{card}`;
+
+export function buildExplainPrompt(card: Card): string {
+  return EXPLAIN_PROMPT.replace("{card}", () => formatCard(card));
+}
