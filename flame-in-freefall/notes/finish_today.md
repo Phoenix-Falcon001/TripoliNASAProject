@@ -11,7 +11,7 @@ pip install -r requirements.txt
 cd app && npm install && npx next telemetry disable && cd ..
 ollama pull llama3.1:8b                    # + any second model for G1, e.g. ollama pull qwen2.5:7b
 ```
-Download one paper per experiment from NASA NTRS into `papers/`. S01 (SAFFIRE) is already listed in `data/sources.csv`. Pick one FLEX and one BASS-II paper.
+Download one paper per experiment from NASA NTRS into `papers/`. S01 (SAFFIRE) is already listed in `data/sources.csv`. Pick one FLEX and one BASS-II paper. Search terms and how to choose: `notes/papers_to_find.md`.
 
 ## 1. Papers → drafts (≈ 30 min, mostly waiting for Ollama)
 ```bash
@@ -46,7 +46,7 @@ git add data && git commit -m "Verified cards" && git push
 The SAMPLE DATA banner disappears as soon as one card is promoted.
 
 ## 4. G1 test: plain AI vs our evidence (≈ 30 min)
-Write ~20 questions in `data/eval/questions.csv` (`id,question,answerable,expected_card_ids,notes`). About 5 should be ones the cards **can't** answer (`answerable` = `no`). Put `demo` in the notes column of the 3–5 you will show live.
+Start from the 20 drafts in `data/eval/questions_draft.csv` (confirm `answerable`, fill `expected_card_ids` once cards exist), and write ~20 questions in `data/eval/questions.csv` (`id,question,answerable,expected_card_ids,notes`). About 5 should be ones the cards **can't** answer (`answerable` = `no`). Put `demo` in the notes column of the 3–5 you will show live.
 ```bash
 cd app && npm run dev                                      # terminal 1
 npm run eval:g1 -- --models llama3.1:8b,qwen2.5:7b        # terminal 2
