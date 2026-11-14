@@ -1,0 +1,72 @@
+{
+  "BAS-001": {
+    "status": "verified",
+    "reviewed_by": "Claude (auto-checked), accepted by team",
+    "fingerprint": "861bbc59295e7804",
+    "decided_at": "2026-11-14T09:30:57+00:00",
+    "note": "Accepted by the team without a line-by-line human read; quote and numbers checked word-for-word against the page text."
+  },
+  "BAS-002": {
+    "status": "verified",
+    "reviewed_by": "Claude (auto-checked), accepted by team",
+    "fingerprint": "91fbc7efe629f262",
+    "decided_at": "2026-11-14T09:30:57+00:00",
+    "note": "Accepted by the team without a line-by-line human read; quote and numbers checked word-for-word against the page text."
+  },
+  "BAS-003": {
+    "status": "verified",
+    "reviewed_by": "Claude (auto-checked), accepted by team",
+    "fingerprint": "7a3065ccd36392af",
+    "decided_at": "2026-11-14T09:30:57+00:00",
+    "note": "Accepted by the team without a line-by-line human read; quote and numbers checked word-for-word against the page text."
+  },
+  "BAS-004": {
+    "status": "verified",
+    "reviewed_by": "Claude (auto-checked), accepted by team",
+    "fingerprint": "16d60187d76455fa",
+    "decided_at": "2026-11-14T09:30:57+00:00",
+    "note": "Accepted by the team without a line-by-line human read; quote and numbers checked word-for-word against the page text."
+  },
+  "BAS-005": {
+    "status": "verified",
+    "reviewed_by": "Claude (auto-checked), accepted by team",
+    "fingerprint": "1dc76edc4831de1a",
+    "decided_at": "2026-11-14T09:30:57+00:00",
+    "note": "Accepted by the team without a line-by-line human read; quote and numbers checked word-for-word against the page text."
+  },
+  "BAS-006": {
+    "status": "verified",
+    "reviewed_by": "Claude (auto-checked), accepted by team",
+    "fingerprint": "9f1ef1f2f53f6c38",
+    "decided_at": "2026-11-14T09:30:57+00:00",
+    "note": "Accepted by the team without a line-by-line human read; quote and numbers checked word-for-word against the page text."
+  },
+  "BAS-007": {
+    "status": "verified",
+    "reviewed_by": "Claude (auto-checked), accepted by team",
+    "fingerprint": "08286ff179b0f258",
+    "decided_at": "2026-11-14T09:30:57+00:00",
+    "note": "Accepted by the team without a line-by-line human read; quote and numbers checked word-for-word against the page text."
+  },
+  "BAS-008": {
+    "status": "verified",
+    "reviewed_by": "Claude (auto-checked), accepted by team",
+    "fingerprint": "440b893dcd2644ec",
+    "decided_at": "2026-11-14T09:30:57+00:00",
+    "note": "Accepted by the team without a line-by-line human read; quote and numbers checked word-for-word against the page text."
+  },
+  "BAS-009": {
+    "status": "verified",
+    "reviewed_by": "Claude (auto-checked), accepted by team",
+    "fingerprint": "5356ae9865a48963",
+    "decided_at": "2026-11-14T09:30:57+00:00",
+    "note": "Accepted by the team without a line-by-line human read; quote and numbers checked word-for-word against the page text."
+  },
+  "BAS-010": {
+    "status": "verified",
+    "reviewed_by": "Claude (auto-checked), accepted by team",
+    "fingerprint": "9611251bc1d1e4ca",
+    "decided_at": "2026-11-14T09:30:57+00:00",
+    "note": "Accepted by the team without a line-by-line human read; quote and numbers checked word-for-word against the page text."
+  }
+}

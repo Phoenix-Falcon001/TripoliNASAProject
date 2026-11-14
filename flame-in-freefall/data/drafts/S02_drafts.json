@@ -1,0 +1,239 @@
+[
+  {
+    "card_id": "FLX-001",
+    "source_id": "S02",
+    "page": 12,
+    "evidence_quote": "The research to date has shown that the flammability limit is lower in reduced gravity.",
+    "finding": "FLEX found that heptane and methanol fuel droplets diluted with inert suppressant gases keep burning at a lower flammability limit in reduced gravity than in normal gravity.",
+    "material_or_fuel": "Heptane and methanol droplets",
+    "conditions": "Reduced gravity; oxygen-nitrogen mixtures diluted with an inert gas",
+    "values": [],
+    "earth_comparison": "The flammability limit is lower in reduced gravity than in normal gravity.",
+    "hazard": "extinction",
+    "control_category": "suppress",
+    "team_interpretation": {
+      "text": "Suppression levels proven on Earth may not be enough in space.",
+      "suggested_by": "Claude"
+    },
+    "open_question": null,
+    "related_cards": [
+      {
+        "card_id": "FLX-002",
+        "relation": "extends"
+      },
+      {
+        "card_id": "FLX-003",
+        "relation": "agrees"
+      }
+    ],
+    "scores": {
+      "crew_safety": 5,
+      "evidence": 4,
+      "moon_mars": 5
+    },
+    "score_reasons": {
+      "crew_safety": "Fires may survive conditions that would stop them on Earth.",
+      "evidence": "ISS results summarized by NASA in an official guide.",
+      "moon_mars": "Applies to any low-gravity vehicle or habitat."
+    },
+    "source_type": "summary",
+    "status": "draft",
+    "reviewed_by": null,
+    "expert_checked": false
+  },
+  {
+    "card_id": "FLX-002",
+    "source_id": "S02",
+    "page": 12,
+    "evidence_quote": "The implication is that terrestrial standards for inert gas suppressants in low gravity do not offer the same margin of safety as in normal gravity.",
+    "finding": "Because flammability limits are lower in reduced gravity, inert-gas suppressant standards developed on Earth do not give the same margin of safety in low gravity.",
+    "material_or_fuel": null,
+    "conditions": null,
+    "values": [],
+    "earth_comparison": "Earth (terrestrial) standards for inert gas suppressants give a smaller safety margin in low gravity.",
+    "hazard": "extinction",
+    "control_category": "suppress",
+    "team_interpretation": {
+      "text": "Inert-gas fire suppression in spacecraft should be sized with space data, not only Earth standards.",
+      "suggested_by": "Claude"
+    },
+    "open_question": null,
+    "related_cards": [
+      {
+        "card_id": "FLX-001",
+        "relation": "extends"
+      },
+      {
+        "card_id": "BAS-002",
+        "relation": "agrees"
+      }
+    ],
+    "scores": {
+      "crew_safety": 5,
+      "evidence": 4,
+      "moon_mars": 5
+    },
+    "score_reasons": {
+      "crew_safety": "Directly about how much suppressant is enough.",
+      "evidence": "NASA's stated implication of the FLEX results.",
+      "moon_mars": "Fire suppression design for exploration vehicles."
+    },
+    "source_type": "summary",
+    "status": "draft",
+    "reviewed_by": null,
+    "expert_checked": false
+  },
+  {
+    "card_id": "FLX-003",
+    "source_id": "S02",
+    "page": 36,
+    "evidence_quote": "identified an LOI that is both significantly lower than in normal gravity and lower than previously predicted and anticipated",
+    "finding": "FLEX identified a limiting oxygen index (the lowest oxygen level that supports burning) for heptane and methanol droplets that is significantly lower than in normal gravity and lower than predicted.",
+    "material_or_fuel": "Heptane and methanol droplets",
+    "conditions": "Microgravity droplet combustion (FLEX)",
+    "values": [],
+    "earth_comparison": "The limiting oxygen index is significantly lower than in normal gravity.",
+    "hazard": "material_flammability",
+    "control_category": "prevent",
+    "team_interpretation": {
+      "text": "Lowering cabin oxygen gives less fire protection in space than Earth data suggest.",
+      "suggested_by": "Claude"
+    },
+    "open_question": null,
+    "related_cards": [
+      {
+        "card_id": "FLX-001",
+        "relation": "agrees"
+      },
+      {
+        "card_id": "BAS-004",
+        "relation": "agrees"
+      }
+    ],
+    "scores": {
+      "crew_safety": 5,
+      "evidence": 4,
+      "moon_mars": 5
+    },
+    "score_reasons": {
+      "crew_safety": "Fuels can burn at lower oxygen in space than expected.",
+      "evidence": "Measured on the ISS; summarized by NASA.",
+      "moon_mars": "Relevant to cabin atmosphere choices."
+    },
+    "source_type": "summary",
+    "status": "draft",
+    "reviewed_by": null,
+    "expert_checked": false
+  },
+  {
+    "card_id": "FLX-004",
+    "source_id": "S02",
+    "page": 34,
+    "evidence_quote": "The FLEX tests showed that the cool flame can burn for a prolonged period of time.",
+    "finding": "After the visible hot flame of a fuel droplet went out, a low-temperature 'cool flame' kept burning for a prolonged period, which many researchers had thought impossible.",
+    "material_or_fuel": "Alkane (e.g. heptane) droplets",
+    "conditions": "Microgravity, quiescent atmosphere",
+    "values": [],
+    "earth_comparison": null,
+    "hazard": "extinction",
+    "control_category": "detect",
+    "team_interpretation": {
+      "text": "After a fire seems extinguished, crews should keep monitoring: burning can continue without a visible flame.",
+      "suggested_by": "Claude"
+    },
+    "open_question": null,
+    "related_cards": [
+      {
+        "card_id": "FLX-005",
+        "relation": "extends"
+      }
+    ],
+    "scores": {
+      "crew_safety": 5,
+      "evidence": 4,
+      "moon_mars": 4
+    },
+    "score_reasons": {
+      "crew_safety": "A fire that looks out may not be out.",
+      "evidence": "Unexpected ISS result, later explained and accepted.",
+      "moon_mars": "General low-gravity behaviour."
+    },
+    "source_type": "summary",
+    "status": "draft",
+    "reviewed_by": null,
+    "expert_checked": false
+  },
+  {
+    "card_id": "FLX-005",
+    "source_id": "S02",
+    "page": 42,
+    "evidence_quote": "persistent flames, invisible to the unaided eye, that will spontaneously re-ignite long after the visible flame has been extinguished.",
+    "finding": "Reduced gravity is particularly conducive to very weak but persistent flames, invisible to the eye, that can spontaneously re-ignite long after the visible flame has been put out.",
+    "material_or_fuel": null,
+    "conditions": null,
+    "values": [],
+    "earth_comparison": null,
+    "hazard": "ignition",
+    "control_category": "detect",
+    "team_interpretation": {
+      "text": "Post-fire monitoring should use instruments, not only eyes, in case of invisible flames.",
+      "suggested_by": "Claude"
+    },
+    "open_question": "What conditions let an invisible cool flame spontaneously re-ignite after the visible flame is out? NASA says the pre-conditions, chemistry and mechanisms are poorly understood.",
+    "related_cards": [
+      {
+        "card_id": "FLX-004",
+        "relation": "extends"
+      }
+    ],
+    "scores": {
+      "crew_safety": 5,
+      "evidence": 3,
+      "moon_mars": 5
+    },
+    "score_reasons": {
+      "crew_safety": "Invisible re-ignition risk after a fire.",
+      "evidence": "NASA guide statement linked to FLEX cool-flame findings.",
+      "moon_mars": "Any reduced-gravity vehicle."
+    },
+    "source_type": "summary",
+    "status": "draft",
+    "reviewed_by": null,
+    "expert_checked": false
+  },
+  {
+    "card_id": "FLX-006",
+    "source_id": "S02",
+    "page": 12,
+    "evidence_quote": "The goal of the research is to examine how the addition of an inert gas suppressant influences the flammability limit of the two fuels.",
+    "finding": "FLEX burned heptane and methanol droplets in oxygen-nitrogen mixtures diluted with nitrogen, carbon dioxide, helium or xenon to see how inert suppressant gases change flammability limits.",
+    "material_or_fuel": "Heptane and methanol droplets",
+    "conditions": "Inert gases tested: nitrogen, carbon dioxide, helium, xenon",
+    "values": [],
+    "earth_comparison": null,
+    "hazard": "extinction",
+    "control_category": "suppress",
+    "team_interpretation": null,
+    "open_question": null,
+    "related_cards": [
+      {
+        "card_id": "FLX-001",
+        "relation": "extends"
+      }
+    ],
+    "scores": {
+      "crew_safety": 3,
+      "evidence": 4,
+      "moon_mars": 4
+    },
+    "score_reasons": {
+      "crew_safety": "Explains what the suppressant results are based on.",
+      "evidence": "Experiment design from NASA's guide.",
+      "moon_mars": "Gas suppressants are candidates for future vehicles."
+    },
+    "source_type": "summary",
+    "status": "draft",
+    "reviewed_by": null,
+    "expert_checked": false
+  }
+]
