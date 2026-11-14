@@ -1,1 +1,21 @@
 id,question,answerable,expected_card_ids,notes
+Q01,How fast does a flame spread over a large fabric sample in a spacecraft?,yes,SAF-001 SAF-012,demo
+Q02,How is flame spread direction in low airflow different from Earth?,yes,BAS-006,
+Q03,Did silicone or Nomex fabric burn in the Saffire tests?,yes,SAF-004 SAF-006,
+Q04,How does the speed of the air flow change flame spread in microgravity?,yes,BAS-007 BAS-006 SAF-011,
+Q05,At what oxygen level can materials burn in microgravity compared to Earth?,yes,BAS-004 BAS-001 FLX-003,demo
+Q06,What happened when the air flow was turned off during the large fabric fire?,yes,SAF-014,
+Q07,What is a cool flame and was it seen in space?,yes,FLX-004 FLX-005,demo
+Q08,How long does a fuel droplet burn in microgravity?,no,,no burn duration on any card
+Q09,Which gases were tested as suppressants in the FLEX experiment?,yes,FLX-006,
+Q10,Are Earth standards for inert gas fire suppressants good enough in low gravity?,yes,FLX-002 FLX-001,
+Q11,What gases or smoke does a large spacecraft fire produce?,no,,no smoke or toxic-product card
+Q12,What was the flame power of the large Saffire fabric fire?,yes,SAF-012,
+Q13,Is NASA's Earth flammability test enough for materials used in space?,yes,BAS-001 SAF-008,
+Q14,What does NASA say is still unknown about fire in space?,yes,SAF-005 SAF-009 FLX-005 BAS-010,demo
+Q15,Does spraying nitrogen at a flame put it out in microgravity?,yes,BAS-003 BAS-002,demo
+Q16,How should astronauts fight a fire on the surface of Mars?,no,,outside our evidence
+Q17,What is the best fire extinguisher brand for the ISS?,no,,outside our evidence
+Q18,How do lithium-ion battery fires behave in microgravity?,no,,outside our evidence
+Q19,How many fires have happened on the International Space Station?,no,,outside our evidence
+Q20,Is it safe to light a candle on the Moon?,no,,outside our evidence

@@ -124,9 +124,22 @@ describe("loadCardData", () => {
 describe("loadDemoAnswers", () => {
   it("keeps only answers whose cards are all in the shown set", async () => {
     const { loadDemoAnswers } = await import("./cards");
-    const all = loadDemoAnswers(path.join(REPO, "data"), new Set(["DEMO-001", "DEMO-006", "DEMO-008"]));
-    expect(all).toHaveLength(2);
-    expect(loadDemoAnswers(path.join(REPO, "data"), new Set(["SAF-001"]))).toEqual([]);
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), "demo-"));
+    try {
+      fs.writeFileSync(
+        path.join(dir, "demo_answers.json"),
+        JSON.stringify([
+          { question: "a", answer: "x [SAF-001]", card_ids: ["SAF-001"], checked_by: "Bassam" },
+          { question: "b", answer: "y [SAF-001] [SAF-002]", card_ids: ["SAF-001", "SAF-002"], checked_by: "Bassam" },
+          { question: "c", answer: "z [DEMO-001]", card_ids: ["DEMO-001"], checked_by: "SAMPLE" },
+        ]),
+      );
+      expect(loadDemoAnswers(dir, new Set(["SAF-001", "SAF-002"])).map((a) => a.question)).toEqual(["a", "b"]);
+      expect(loadDemoAnswers(dir, new Set(["SAF-001"])).map((a) => a.question)).toEqual(["a"]);
+      expect(loadDemoAnswers(dir, new Set(["DEMO-001"])).map((a) => a.question)).toEqual(["c"]);
+    } finally {
+      fs.rmSync(dir, { recursive: true, force: true });
+    }
   });
 });
 
