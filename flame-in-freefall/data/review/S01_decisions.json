@@ -1,0 +1,107 @@
+{
+  "SAF-001": {
+    "status": "verified",
+    "reviewed_by": "Claude (auto-checked), accepted by team",
+    "fingerprint": "f041200efbedb1fc",
+    "decided_at": "2026-11-14T09:19:00+00:00",
+    "note": "Accepted by the team without a line-by-line human read; quote and numbers checked word-for-word against the page text."
+  },
+  "SAF-002": {
+    "status": "verified",
+    "reviewed_by": "Claude (auto-checked), accepted by team",
+    "fingerprint": "2a86245f94ff01b9",
+    "decided_at": "2026-11-14T09:19:00+00:00",
+    "note": "Accepted by the team without a line-by-line human read; quote and numbers checked word-for-word against the page text."
+  },
+  "SAF-003": {
+    "status": "verified",
+    "reviewed_by": "Claude (auto-checked), accepted by team",
+    "fingerprint": "5f1b75c6907e316a",
+    "decided_at": "2026-11-14T09:19:00+00:00",
+    "note": "Accepted by the team without a line-by-line human read; quote and numbers checked word-for-word against the page text."
+  },
+  "SAF-004": {
+    "status": "verified",
+    "reviewed_by": "Claude (auto-checked), accepted by team",
+    "fingerprint": "4bfe780761e38626",
+    "decided_at": "2026-11-14T09:19:00+00:00",
+    "note": "Accepted by the team without a line-by-line human read; quote and numbers checked word-for-word against the page text."
+  },
+  "SAF-005": {
+    "status": "verified",
+    "reviewed_by": "Claude (auto-checked), accepted by team",
+    "fingerprint": "d54d0439eddf7037",
+    "decided_at": "2026-11-14T09:19:00+00:00",
+    "note": "Accepted by the team without a line-by-line human read; quote and numbers checked word-for-word against the page text."
+  },
+  "SAF-006": {
+    "status": "verified",
+    "reviewed_by": "Claude (auto-checked), accepted by team",
+    "fingerprint": "aa3e61d1694bf912",
+    "decided_at": "2026-11-14T09:19:00+00:00",
+    "note": "Accepted by the team without a line-by-line human read; quote and numbers checked word-for-word against the page text."
+  },
+  "SAF-007": {
+    "status": "verified",
+    "reviewed_by": "Claude (auto-checked), accepted by team",
+    "fingerprint": "e7caddbca48b33f8",
+    "decided_at": "2026-11-14T09:19:00+00:00",
+    "note": "Accepted by the team without a line-by-line human read; quote and numbers checked word-for-word against the page text."
+  },
+  "SAF-008": {
+    "status": "verified",
+    "reviewed_by": "Claude (auto-checked), accepted by team",
+    "fingerprint": "e5c0835c87ea9049",
+    "decided_at": "2026-11-14T09:19:00+00:00",
+    "note": "Accepted by the team without a line-by-line human read; quote and numbers checked word-for-word against the page text."
+  },
+  "SAF-009": {
+    "status": "verified",
+    "reviewed_by": "Claude (auto-checked), accepted by team",
+    "fingerprint": "434d1e0a534b6dca",
+    "decided_at": "2026-11-14T09:19:00+00:00",
+    "note": "Accepted by the team without a line-by-line human read; quote and numbers checked word-for-word against the page text."
+  },
+  "SAF-010": {
+    "status": "verified",
+    "reviewed_by": "Claude (auto-checked), accepted by team",
+    "fingerprint": "276a59172ec9a628",
+    "decided_at": "2026-11-14T09:19:00+00:00",
+    "note": "Accepted by the team without a line-by-line human read; quote and numbers checked word-for-word against the page text."
+  },
+  "SAF-011": {
+    "status": "verified",
+    "reviewed_by": "Claude (auto-checked), accepted by team",
+    "fingerprint": "03469c76c79d4bf1",
+    "decided_at": "2026-11-14T09:19:00+00:00",
+    "note": "Accepted by the team without a line-by-line human read; quote and numbers checked word-for-word against the page text."
+  },
+  "SAF-012": {
+    "status": "verified",
+    "reviewed_by": "Claude (auto-checked), accepted by team",
+    "fingerprint": "b5ff00bdcf374778",
+    "decided_at": "2026-11-14T09:19:00+00:00",
+    "note": "Accepted by the team without a line-by-line human read; quote and numbers checked word-for-word against the page text."
+  },
+  "SAF-013": {
+    "status": "verified",
+    "reviewed_by": "Claude (auto-checked), accepted by team",
+    "fingerprint": "af0473e845e873ee",
+    "decided_at": "2026-11-14T09:19:00+00:00",
+    "note": "Accepted by the team without a line-by-line human read; quote and numbers checked word-for-word against the page text."
+  },
+  "SAF-014": {
+    "status": "verified",
+    "reviewed_by": "Claude (auto-checked), accepted by team",
+    "fingerprint": "e7be105200198e20",
+    "decided_at": "2026-11-14T09:19:00+00:00",
+    "note": "Accepted by the team without a line-by-line human read; quote and numbers checked word-for-word against the page text."
+  },
+  "SAF-015": {
+    "status": "verified",
+    "reviewed_by": "Claude (auto-checked), accepted by team",
+    "fingerprint": "44ffaacd7654ce1c",
+    "decided_at": "2026-11-14T09:19:00+00:00",
+    "note": "Accepted by the team without a line-by-line human read; quote and numbers checked word-for-word against the page text."
+  }
+}
