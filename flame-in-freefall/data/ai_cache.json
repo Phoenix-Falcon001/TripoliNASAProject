@@ -1,1 +1,62 @@
-{}
+{
+  "BAS-001": {
+    "text": "NASA's main test for spacecraft materials is done on Earth. The BASS experiment on the ISS found that this test is not conservative: some materials can burn at lower oxygen levels in space than on Earth. The team reads this as: passing the Earth test may not be enough for critical materials.",
+    "checked_by": "Claude (checked against cards), accepted by team",
+    "model": "written by Claude from the card",
+    "drafted_at": "2026-11-14T09:33:18+00:00"
+  },
+  "BAS-002": {
+    "text": "On the ISS, spraying a suppressant locally at a flame did not put it out. The jet pulled in fresh air and kept the flame burning, even with the surrounding airflow off. The team reads this as a warning for how extinguishers are aimed in space.",
+    "checked_by": "Claude (checked against cards), accepted by team",
+    "model": "written by Claude from the card",
+    "drafted_at": "2026-11-14T09:33:18+00:00"
+  },
+  "BAS-003": {
+    "text": "In microgravity, nitrogen aimed at a flame can make it stronger, because the gas stream drags oxygen into the flame. On Earth, attacking the base of the flame usually works best. The team reads this as: gas extinguishers must be tested in microgravity.",
+    "checked_by": "Claude (checked against cards), accepted by team",
+    "model": "written by Claude from the card",
+    "drafted_at": "2026-11-14T09:33:18+00:00"
+  },
+  "BAS-004": {
+    "text": "In the slow air flow of microgravity or partial gravity, some materials keep burning at lower oxygen levels than on Earth. The team reads this as: Moon and Mars habitats cannot rely on Earth flammability limits.",
+    "checked_by": "Claude (checked against cards), accepted by team",
+    "model": "written by Claude from the card",
+    "drafted_at": "2026-11-14T09:33:18+00:00"
+  },
+  "BAS-005": {
+    "text": "Materials catch fire more easily in low gravity because hot air does not rise away from the surface to cool it. The team reads this as: keep ignition sources away from flammable materials even more strictly than on Earth.",
+    "checked_by": "Claude (checked against cards), accepted by team",
+    "model": "written by Claude from the card",
+    "drafted_at": "2026-11-14T09:33:18+00:00"
+  },
+  "BAS-007": {
+    "text": "Flames on solid materials survive at the lowest oxygen level when the air moves at about 10 cm/s, which is also where they spread fastest. That speed is typical of spacecraft ventilation. The team reads this as: normal cabin airflow is the worst case to test.",
+    "checked_by": "Claude (checked against cards), accepted by team",
+    "model": "written by Claude from the card",
+    "drafted_at": "2026-11-14T09:33:18+00:00"
+  },
+  "FLX-001": {
+    "text": "In the FLEX experiment, burning fuel droplets kept going at a lower flammability limit in reduced gravity than in normal gravity, even with suppressant gases added. The team reads this as: suppression levels proven on Earth may not be enough in space.",
+    "checked_by": "Claude (checked against cards), accepted by team",
+    "model": "written by Claude from the card",
+    "drafted_at": "2026-11-14T09:33:18+00:00"
+  },
+  "FLX-002": {
+    "text": "Because fuels stay flammable down to lower limits in low gravity, the safety margins of Earth standards for inert-gas suppressants are smaller in space. The team reads this as: size gas suppression systems with space data.",
+    "checked_by": "Claude (checked against cards), accepted by team",
+    "model": "written by Claude from the card",
+    "drafted_at": "2026-11-14T09:33:18+00:00"
+  },
+  "FLX-003": {
+    "text": "FLEX found the lowest oxygen level at which heptane and methanol droplets can burn is significantly lower in space than on Earth, and lower than predicted. The team reads this as: reducing cabin oxygen protects less in space than Earth data suggest.",
+    "checked_by": "Claude (checked against cards), accepted by team",
+    "model": "written by Claude from the card",
+    "drafted_at": "2026-11-14T09:33:18+00:00"
+  },
+  "SAF-012": {
+    "text": "The large Saffire-1 fabric fire released an estimated 1200 +/- 300 W of heat and burned for 420 s in 20 cm/s air flow. The team reads this as: plan suppression and ventilation for fires of about this size.",
+    "checked_by": "Claude (checked against cards), accepted by team",
+    "model": "written by Claude from the card",
+    "drafted_at": "2026-11-14T09:33:18+00:00"
+  }
+}

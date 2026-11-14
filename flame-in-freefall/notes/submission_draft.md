@@ -12,7 +12,7 @@ Fire behaves differently without gravity, and the answers are spread across many
 
 ## Project details
 **What it does**
-- **Explore:** [[K1]] verified cards from [[papers]] NASA papers across [[K2]] experiments, filterable by hazard, control type and material. Sliders let you weight crew safety, strength of evidence and Moon/Mars relevance; a stability badge shows which cards stay in the top 10 under any reasonable weighting.
+- **Explore:** 31 verified cards from 2 NASA documents across 3 experiments (SAFFIRE, FLEX, BASS-II), filterable by hazard, control type and material. Sliders let you weight crew safety, strength of evidence and Moon/Mars relevance; a stability badge shows which cards stay in the top 10 under any reasonable weighting.
 - **Ask:** questions are answered by a local AI that may only use the retrieved cards and must cite them. If the cards don't cover a question it says "Not in our evidence."
 - **What NASA doesn't know:** open questions stated in the papers, plus a map of where our evidence is thin.
 - **Earth vs Space:** comparisons, only where the paper itself makes them.
@@ -40,13 +40,13 @@ Same local model, [[questions]] questions, asked once plain and once with our ca
 ## NASA data and resources used
 | ID | Title | Experiment | Link |
 |---|---|---|---|
-| S01 | Results of Large-Scale Spacecraft Flammability Tests | SAFFIRE | https://ntrs.nasa.gov/citations/20170008805 |
-| [[S02]] | [[title]] | FLEX | [[link]] |
-| [[S03]] | [[title]] | BASS-II | [[link]] |
+| S01 | Results of Large-Scale Spacecraft Flammability Tests (ICES 2017 slides) | SAFFIRE | https://ntrs.nasa.gov/citations/20170008805 |
+| S02 | A Researcher's Guide to: Combustion Science (ISS), NP-2015-10-034: droplet combustion / FLEX sections | FLEX | https://www.nasa.gov/missions/station/a-researchers-guide-to-combustion-science/ |
+| S03 | Same Guide: solid-fuel / BASS sections | BASS-II | same link |
 
 ## Use of AI (disclose honestly)
-- **In the app:** a local open-weight model via Ollama ([[model]]) writes explanations and answers. It only sees verified cards, must cite them, and its text is labelled "AI explanation". Pre-written AI text is shown only after a team member checked it.
-- **In building it:** we used Claude (Anthropic) through Claude Code to help write code, tests and documentation. Card drafts come from [[Ollama / Claude / by hand]], and **every card shown was approved by a team member against the PDF page**. [[K5]] were checked by a second person.
+- **In the app:** a local open-weight model via Ollama ([[model]]) answers questions live. It only sees verified cards, must cite them, and its text is labelled "AI explanation". The offline fallback answers and card explanations were written by Claude from the cards only, and every number in them was checked against the cited cards.
+- **In building it:** we used Claude (Anthropic) through Claude Code to help write code, tests and documentation, and to draft the evidence cards from the text of the NASA documents. Every card's quote was checked automatically, word for word, against its PDF page, and every number on a card appears on that page. The team accepted the cards on that basis; [[number]] cards were also read by a team member against the PDF (update before submitting, and say "none" if none). The app's trust badges show this for each card.
 
 ## Team
 Bassam (evidence lead), Nermine (app & integration), Rita (AI & evaluation), Kafa (pipeline & data), [[name]] (evidence reviewer, mechanical engineering).
@@ -58,7 +58,7 @@ Bassam (evidence lead), Nermine (app & integration), Rita (AI & evaluation), Kaf
 | # | Slide | Say (≈ 20–25 s each) |
 |---|---|---|
 | 1 | **The problem**: a spacecraft fire photo from a NASA source we cite, plus the title | "In space, fire doesn't rise. NASA has run real fire experiments in orbit, but the answers are spread across papers that crews and planners don't have time to read." |
-| 2 | **Evidence cards**: screenshot of one card page (blue / orange / purple) | "We turned those papers into [[K1]] verified evidence cards: exact quote, page, numbers, checked by two people. Blue is what NASA found, orange is our reading, purple is AI, always labelled." |
+| 2 | **Evidence cards**: screenshot of one card page (blue / orange / purple) | "We turned NASA's SAFFIRE, FLEX and BASS-II results into 31 evidence cards: exact quote, page and numbers, each checked word for word against the source. Blue is what NASA found, orange is our reading, purple is AI, always labelled." |
 | 3 | **Live demo**: Ask, then cards, then citation (`notes/demo_path.md` steps 1–2) | "Ask anything. Our offline AI may only use these cards and must cite them." |
 | 4 | **Does it help?**: the Plain AI vs our evidence table | "Same model, same questions: with our cards, answers with a number from nowhere dropped from [[plain %]] to [[cards %]], and it says 'Not in our evidence' instead of guessing." *(skip this slide if G1 hasn't run)* |
 | 5 | **What NASA doesn't know**: the gaps page | "And the papers themselves tell us what's still unknown, so here are the next questions to test for Moon and Mars crews." |

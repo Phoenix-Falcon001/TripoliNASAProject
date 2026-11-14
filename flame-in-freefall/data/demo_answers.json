@@ -1,19 +1,60 @@
 [
   {
-    "question": "What do we know about flame spread?",
-    "answer": "SAMPLE pre-written answer for development only.\n\nWhat NASA found: sample finding about flame spread [DEMO-001]. Another sample finding [DEMO-008].\n\nOur safety reading: sample team reading, not NASA guidance [DEMO-001].\n\nSummary: this is sample text, not a real answer.",
+    "question": "How fast does a flame spread over a large fabric sample in a spacecraft?",
+    "answer": "What NASA found: In the large Saffire-1 fire, flame spread over 40.6-cm-wide cotton-fiberglass fabric averaged 1.8 mm/s with the air flow and 1.3 mm/s against it, in 20 cm/s air flow [SAF-001]. The fire had an estimated average flame power of 1200 +/- 300 W and burned for 420 s [SAF-012].\n\nOur safety reading (team, not NASA guidance): A large fabric fire in a ventilated module keeps spreading steadily, and spread with the air flow is faster than against it [SAF-001].\n\nSummary: A cabin-scale fabric fire spreads steadily at about 1.8 mm/s and releases over a kilowatt of heat [SAF-001] [SAF-012].",
     "card_ids": [
-      "DEMO-001",
-      "DEMO-008"
+      "SAF-001",
+      "SAF-012"
     ],
-    "checked_by": "SAMPLE (fake, development only)"
+    "checked_by": "Claude (checked against cards), accepted by team",
+    "model": "written by Claude from the cards",
+    "drafted_at": "2026-11-14T09:33:18+00:00"
   },
   {
-    "question": "How can a fire be detected?",
-    "answer": "SAMPLE pre-written answer for development only.\n\nWhat NASA found: sample detection finding [DEMO-006].\n\nOur safety reading: sample team reading, not NASA guidance [DEMO-006].\n\nSummary: this is sample text, not a real answer.",
+    "question": "At what oxygen level can materials burn in microgravity compared to Earth?",
+    "answer": "What NASA found: In low air flow, some materials burn at lower oxygen levels in microgravity or partial gravity than in normal gravity [BAS-004]. BASS results indicate NASA's standard Earth test (NASA-STD-6001 Test 1) is not conservative [BAS-001]. For fuel droplets, FLEX found a limiting oxygen index significantly lower than in normal gravity [FLX-003].\n\nOur safety reading (team, not NASA guidance): Moon and Mars habitats cannot assume Earth flammability limits [BAS-004].\n\nSummary: Materials and fuels can burn at lower oxygen in space than on Earth; the cards give no single oxygen value [BAS-004] [BAS-001] [FLX-003].",
     "card_ids": [
-      "DEMO-006"
+      "BAS-004",
+      "BAS-001",
+      "FLX-003"
     ],
-    "checked_by": "SAMPLE (fake, development only)"
+    "checked_by": "Claude (checked against cards), accepted by team",
+    "model": "written by Claude from the cards",
+    "drafted_at": "2026-11-14T09:33:18+00:00"
+  },
+  {
+    "question": "What is a cool flame and was it seen in space?",
+    "answer": "What NASA found: In FLEX, after the visible hot flame of a fuel droplet went out, a low-temperature cool flame kept burning for a prolonged period [FLX-004]. Reduced gravity is conducive to weak, persistent flames invisible to the eye that can re-ignite long after the visible flame is out [FLX-005].\n\nOur safety reading (team, not NASA guidance): After a fire seems extinguished, crews should keep monitoring, because burning can continue without a visible flame [FLX-004].\n\nSummary: Yes. Cool flames were seen on the ISS, and NASA says how they re-ignite is still poorly understood [FLX-004] [FLX-005].",
+    "card_ids": [
+      "FLX-004",
+      "FLX-005"
+    ],
+    "checked_by": "Claude (checked against cards), accepted by team",
+    "model": "written by Claude from the cards",
+    "drafted_at": "2026-11-14T09:33:18+00:00"
+  },
+  {
+    "question": "What does NASA say is still unknown about fire in space?",
+    "answer": "What NASA found: How a large fire spreads and grows inside a real spacecraft is a substantial gap in understanding [SAF-009]. Why silicone is less flammable in microgravity is not understood [SAF-005]. The conditions that let invisible cool flames re-ignite are poorly understood [FLX-005]. Where to aim a suppressant in microgravity is not obvious [BAS-010].\n\nOur safety reading (team, not NASA guidance): These gaps matter most for exploration vehicles, where crews cannot escape [SAF-009].\n\nSummary: Large-fire growth, material behaviour, invisible re-ignition and how to fight fires in microgravity are still open questions [SAF-009] [SAF-005] [FLX-005] [BAS-010].",
+    "card_ids": [
+      "SAF-009",
+      "SAF-005",
+      "FLX-005",
+      "BAS-010"
+    ],
+    "checked_by": "Claude (checked against cards), accepted by team",
+    "model": "written by Claude from the cards",
+    "drafted_at": "2026-11-14T09:33:18+00:00"
+  },
+  {
+    "question": "Does spraying nitrogen at a flame put it out in microgravity?",
+    "answer": "What NASA found: Nitrogen applied to a flame in microgravity can strengthen it, because the stream pulls oxygen into the flame [BAS-003]. BASS found that local application of suppressant was not adequate: the jet pulls in air and keeps the flame burning even when the airflow is off [BAS-002]. On Earth, the best results generally come from attacking the base of the flame [BAS-003].\n\nOur safety reading (team, not NASA guidance): Spraying nitrogen is not automatically safe in microgravity; extinguishers and procedures need testing there [BAS-003].\n\nSummary: Not reliably. A local nitrogen jet can feed the flame instead of putting it out [BAS-003] [BAS-002].",
+    "card_ids": [
+      "BAS-003",
+      "BAS-002"
+    ],
+    "checked_by": "Claude (checked against cards), accepted by team",
+    "model": "written by Claude from the cards",
+    "drafted_at": "2026-11-14T09:33:18+00:00"
   }
 ]

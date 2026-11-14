@@ -1,0 +1,483 @@
+[
+  {
+    "card_id": "BAS-001",
+    "source_id": "S03",
+    "page": 31,
+    "evidence_quote": "Recent results from the BASS experiment currently running on the ISS indicate that NASA-STD-6001 Test 1 is not conservative",
+    "finding": "BASS results indicate that NASA's standard Earth flammability test (NASA-STD-6001 Test 1) is not conservative: materials can burn at lower oxygen levels in microgravity than on Earth.",
+    "material_or_fuel": "Solid spacecraft materials",
+    "conditions": "ISS Microgravity Science Glovebox",
+    "values": [],
+    "earth_comparison": "Materials can burn at lower oxygen levels in microgravity than on Earth.",
+    "hazard": "material_flammability",
+    "control_category": "material_selection",
+    "team_interpretation": {
+      "text": "Materials that pass the Earth test may still burn in space; critical materials need extra margin or space data.",
+      "suggested_by": "Claude"
+    },
+    "open_question": null,
+    "related_cards": [
+      {
+        "card_id": "SAF-008",
+        "relation": "agrees"
+      },
+      {
+        "card_id": "SAF-004",
+        "relation": "conflicts"
+      },
+      {
+        "card_id": "BAS-004",
+        "relation": "agrees"
+      }
+    ],
+    "scores": {
+      "crew_safety": 5,
+      "evidence": 4,
+      "moon_mars": 5
+    },
+    "score_reasons": {
+      "crew_safety": "Questions the main material safety test.",
+      "evidence": "ISS results summarized by NASA.",
+      "moon_mars": "Material screening for all future vehicles."
+    },
+    "source_type": "summary",
+    "status": "draft",
+    "reviewed_by": null,
+    "expert_checked": false,
+    "auto_check": {
+      "quote_found": true,
+      "quote_score": 100.0,
+      "numbers_found": true,
+      "missing_numbers": [],
+      "reasons": []
+    }
+  },
+  {
+    "card_id": "BAS-002",
+    "source_id": "S03",
+    "page": 31,
+    "evidence_quote": "current findings show that local application of suppressant is not adequate for flame extinguishment.",
+    "finding": "BASS found that applying suppressant locally did not put out the flame: the local jet pulls in air and keeps the flame burning, even when the surrounding airflow is turned off.",
+    "material_or_fuel": "Solid spacecraft materials",
+    "conditions": "Microgravity; local suppressant jet",
+    "values": [],
+    "earth_comparison": null,
+    "hazard": "extinction",
+    "control_category": "suppress",
+    "team_interpretation": {
+      "text": "Aiming a gas jet at a flame may feed it in microgravity; extinguisher design and procedures should account for this.",
+      "suggested_by": "Claude"
+    },
+    "open_question": null,
+    "related_cards": [
+      {
+        "card_id": "BAS-003",
+        "relation": "agrees"
+      },
+      {
+        "card_id": "SAF-014",
+        "relation": "extends"
+      }
+    ],
+    "scores": {
+      "crew_safety": 5,
+      "evidence": 4,
+      "moon_mars": 5
+    },
+    "score_reasons": {
+      "crew_safety": "Directly about how crews fight fires.",
+      "evidence": "ISS results summarized by NASA.",
+      "moon_mars": "Applies to any crewed spacecraft."
+    },
+    "source_type": "summary",
+    "status": "draft",
+    "reviewed_by": null,
+    "expert_checked": false,
+    "auto_check": {
+      "quote_found": true,
+      "quote_score": 100.0,
+      "numbers_found": true,
+      "missing_numbers": [],
+      "reasons": []
+    }
+  },
+  {
+    "card_id": "BAS-003",
+    "source_id": "S03",
+    "page": 22,
+    "evidence_quote": "Early results have demonstrated that nitrogen applied to the flame can actually strengthen it because of this effect.",
+    "finding": "Nitrogen applied as a suppressant to a flame in microgravity can strengthen it, because the suppressant stream pulls oxygen into the flame.",
+    "material_or_fuel": "Solid spacecraft materials",
+    "conditions": "Microgravity; nitrogen suppressant",
+    "values": [],
+    "earth_comparison": "On Earth the best results generally come from attacking the base of the flame.",
+    "hazard": "extinction",
+    "control_category": "suppress",
+    "team_interpretation": {
+      "text": "Gas extinguishers need testing in microgravity; spraying nitrogen is not automatically safe.",
+      "suggested_by": "Claude"
+    },
+    "open_question": null,
+    "related_cards": [
+      {
+        "card_id": "BAS-002",
+        "relation": "agrees"
+      },
+      {
+        "card_id": "BAS-010",
+        "relation": "extends"
+      }
+    ],
+    "scores": {
+      "crew_safety": 5,
+      "evidence": 4,
+      "moon_mars": 5
+    },
+    "score_reasons": {
+      "crew_safety": "A suppressant can make the fire worse.",
+      "evidence": "Early BASS results described in NASA's guide.",
+      "moon_mars": "Extinguisher design for exploration."
+    },
+    "source_type": "summary",
+    "status": "draft",
+    "reviewed_by": null,
+    "expert_checked": false,
+    "auto_check": {
+      "quote_found": true,
+      "quote_score": 100.0,
+      "numbers_found": true,
+      "missing_numbers": [],
+      "reasons": []
+    }
+  },
+  {
+    "card_id": "BAS-004",
+    "source_id": "S03",
+    "page": 18,
+    "evidence_quote": "In the low-flow conditions of microgravity or partial gravity, some materials are flammable at lower oxygen concentrations than in normal gravity",
+    "finding": "Microgravity material-flammability experiments (the Guide's solid-fuel section, which leads into BASS) showed that in low air flow some materials burn at lower oxygen levels than in normal gravity.",
+    "material_or_fuel": "Solid spacecraft materials",
+    "conditions": "Low-flow microgravity or partial gravity",
+    "values": [],
+    "earth_comparison": "Some materials are flammable at lower oxygen concentrations than in normal gravity.",
+    "hazard": "material_flammability",
+    "control_category": "material_selection",
+    "team_interpretation": {
+      "text": "Moon and Mars habitats cannot assume Earth flammability limits.",
+      "suggested_by": "Claude"
+    },
+    "open_question": null,
+    "related_cards": [
+      {
+        "card_id": "BAS-001",
+        "relation": "agrees"
+      },
+      {
+        "card_id": "FLX-003",
+        "relation": "agrees"
+      }
+    ],
+    "scores": {
+      "crew_safety": 5,
+      "evidence": 4,
+      "moon_mars": 5
+    },
+    "score_reasons": {
+      "crew_safety": "Lower oxygen does not protect as much as on Earth.",
+      "evidence": "Summary of several microgravity experiments.",
+      "moon_mars": "Explicitly includes partial gravity (Moon, Mars)."
+    },
+    "source_type": "summary",
+    "status": "draft",
+    "reviewed_by": null,
+    "expert_checked": false,
+    "auto_check": {
+      "quote_found": true,
+      "quote_score": 100.0,
+      "numbers_found": true,
+      "missing_numbers": [],
+      "reasons": []
+    }
+  },
+  {
+    "card_id": "BAS-005",
+    "source_id": "S03",
+    "page": 18,
+    "evidence_quote": "Materials are easier to ignite in low gravity because of reduced natural convective cooling from the fuel surface.",
+    "finding": "Materials are easier to ignite in low gravity because there is less natural convective cooling of the fuel surface (summary of microgravity solid-fuel experiments).",
+    "material_or_fuel": "Solid spacecraft materials",
+    "conditions": "Low gravity",
+    "values": [],
+    "earth_comparison": null,
+    "hazard": "ignition",
+    "control_category": "prevent",
+    "team_interpretation": {
+      "text": "Keep ignition sources (hot electronics, sparks) away from flammable materials even more strictly than on Earth.",
+      "suggested_by": "Claude"
+    },
+    "open_question": null,
+    "related_cards": [
+      {
+        "card_id": "BAS-004",
+        "relation": "agrees"
+      }
+    ],
+    "scores": {
+      "crew_safety": 5,
+      "evidence": 4,
+      "moon_mars": 5
+    },
+    "score_reasons": {
+      "crew_safety": "Ignition sources are more dangerous in space.",
+      "evidence": "Summary of microgravity experiments.",
+      "moon_mars": "Applies to low and partial gravity."
+    },
+    "source_type": "summary",
+    "status": "draft",
+    "reviewed_by": null,
+    "expert_checked": false,
+    "auto_check": {
+      "quote_found": true,
+      "quote_score": 100.0,
+      "numbers_found": true,
+      "missing_numbers": [],
+      "reasons": []
+    }
+  },
+  {
+    "card_id": "BAS-006",
+    "source_id": "S03",
+    "page": 18,
+    "evidence_quote": "Once established, flames in low-speed airflows may preferentially spread into the oncoming airflow",
+    "finding": "In low-speed airflow in microgravity, flames on solid materials may spread mainly into the oncoming airflow, depending on the flow speed (summary of microgravity experiments).",
+    "material_or_fuel": "Solid spacecraft materials",
+    "conditions": "Low-speed airflow, microgravity",
+    "values": [],
+    "earth_comparison": "This is opposite to the effect that occurs in normal gravity.",
+    "hazard": "flame_spread",
+    "control_category": "detect",
+    "team_interpretation": {
+      "text": "Detectors and crew should expect a fire to move toward the air supply, not only downstream.",
+      "suggested_by": "Claude"
+    },
+    "open_question": null,
+    "related_cards": [
+      {
+        "card_id": "SAF-001",
+        "relation": "extends"
+      }
+    ],
+    "scores": {
+      "crew_safety": 4,
+      "evidence": 4,
+      "moon_mars": 4
+    },
+    "score_reasons": {
+      "crew_safety": "Fire may move against the air flow, toward the air supply.",
+      "evidence": "Summary of microgravity experiments.",
+      "moon_mars": "Ventilated habitats."
+    },
+    "source_type": "summary",
+    "status": "draft",
+    "reviewed_by": null,
+    "expert_checked": false,
+    "auto_check": {
+      "quote_found": true,
+      "quote_score": 100.0,
+      "numbers_found": true,
+      "missing_numbers": [],
+      "reasons": []
+    }
+  },
+  {
+    "card_id": "BAS-007",
+    "source_id": "S03",
+    "page": 31,
+    "evidence_quote": "For flame spread across solid materials, the characteristic gas velocity of the minimum in the curve is on the order of 10 cm/s",
+    "finding": "Flames on solid materials can burn at the lowest oxygen level when the gas flow is on the order of 10 cm/s, which also gives the fastest flame spread and is typical of spacecraft ventilation.",
+    "material_or_fuel": "Solid spacecraft materials",
+    "conditions": "Microgravity, forced flow",
+    "values": [
+      {
+        "quantity": "gas velocity at the flammability minimum",
+        "value": "on the order of 10",
+        "unit": "cm/s"
+      }
+    ],
+    "earth_comparison": null,
+    "hazard": "material_flammability",
+    "control_category": "prevent",
+    "team_interpretation": {
+      "text": "Normal cabin ventilation speeds are the worst case for material flammability; tests should include this flow.",
+      "suggested_by": "Claude"
+    },
+    "open_question": null,
+    "related_cards": [
+      {
+        "card_id": "BAS-004",
+        "relation": "extends"
+      }
+    ],
+    "scores": {
+      "crew_safety": 5,
+      "evidence": 4,
+      "moon_mars": 5
+    },
+    "score_reasons": {
+      "crew_safety": "Normal cabin ventilation is the most dangerous flow for flame spread.",
+      "evidence": "Summary of microgravity flame-spread research.",
+      "moon_mars": "All ventilated vehicles."
+    },
+    "source_type": "summary",
+    "status": "draft",
+    "reviewed_by": null,
+    "expert_checked": false,
+    "auto_check": {
+      "quote_found": true,
+      "quote_score": 100.0,
+      "numbers_found": true,
+      "missing_numbers": [],
+      "reasons": []
+    }
+  },
+  {
+    "card_id": "BAS-008",
+    "source_id": "S03",
+    "page": 19,
+    "evidence_quote": "The tests have yielded useful results on the flow-velocity effect and flame suppression (by nitrogen)",
+    "finding": "BASS burned flat samples, PMMA spheres, porous wax slabs and wax candles in ISS air (nominally 21 percent oxygen), and with added nitrogen at oxygen levels as low as 17 percent.",
+    "material_or_fuel": "Flat samples, PMMA spheres, wax slabs, wax candles",
+    "conditions": "ISS Microgravity Science Glovebox; 21 percent oxygen and down to 17 percent",
+    "values": [
+      {
+        "quantity": "oxygen, ISS air (nominal)",
+        "value": "21",
+        "unit": "percent"
+      },
+      {
+        "quantity": "lowest oxygen tested",
+        "value": "17",
+        "unit": "percent"
+      }
+    ],
+    "earth_comparison": null,
+    "hazard": "extinction",
+    "control_category": "suppress",
+    "team_interpretation": null,
+    "open_question": null,
+    "related_cards": [
+      {
+        "card_id": "BAS-003",
+        "relation": "extends"
+      }
+    ],
+    "scores": {
+      "crew_safety": 3,
+      "evidence": 4,
+      "moon_mars": 4
+    },
+    "score_reasons": {
+      "crew_safety": "Shows what the BASS findings are based on.",
+      "evidence": "Experiment description in NASA's guide.",
+      "moon_mars": "Oxygen levels relevant to habitats."
+    },
+    "source_type": "summary",
+    "status": "draft",
+    "reviewed_by": null,
+    "expert_checked": false,
+    "auto_check": {
+      "quote_found": true,
+      "quote_score": 100.0,
+      "numbers_found": true,
+      "missing_numbers": [],
+      "reasons": []
+    }
+  },
+  {
+    "card_id": "BAS-009",
+    "source_id": "S03",
+    "page": 21,
+    "evidence_quote": "BASS tests the hypothesis that materials in microgravity, with adequate ventilation, burn as well if not better than the same material in normal gravity",
+    "finding": "BASS was designed to test whether materials with adequate ventilation burn as well as, or better than, the same material in normal gravity under otherwise identical conditions.",
+    "material_or_fuel": "Solid spacecraft materials",
+    "conditions": "Same pressure, oxygen and temperature as the normal-gravity comparison",
+    "values": [],
+    "earth_comparison": null,
+    "hazard": "material_flammability",
+    "control_category": "material_selection",
+    "team_interpretation": null,
+    "open_question": "Do materials with adequate ventilation burn as well as or better in microgravity than on Earth for all spacecraft materials? BASS tests this; the Guide reports it for some materials.",
+    "related_cards": [
+      {
+        "card_id": "BAS-001",
+        "relation": "extends"
+      }
+    ],
+    "scores": {
+      "crew_safety": 4,
+      "evidence": 3,
+      "moon_mars": 4
+    },
+    "score_reasons": {
+      "crew_safety": "The key question for material safety.",
+      "evidence": "States the hypothesis, not the full answer.",
+      "moon_mars": "Material choice for future vehicles."
+    },
+    "source_type": "summary",
+    "status": "draft",
+    "reviewed_by": null,
+    "expert_checked": false,
+    "auto_check": {
+      "quote_found": true,
+      "quote_score": 100.0,
+      "numbers_found": true,
+      "missing_numbers": [],
+      "reasons": []
+    }
+  },
+  {
+    "card_id": "BAS-010",
+    "source_id": "S03",
+    "page": 22,
+    "evidence_quote": "For a fire burning in microgravity, the best point of application of suppressant may not be immediately apparent",
+    "finding": "Where to aim an extinguisher in microgravity is not obvious: depending on flame geometry and the extinguisher, the suppressant stream may be ineffective or even make the flame worse.",
+    "material_or_fuel": null,
+    "conditions": null,
+    "values": [],
+    "earth_comparison": null,
+    "hazard": "extinction",
+    "control_category": "suppress",
+    "team_interpretation": {
+      "text": "Fire-fighting procedures need microgravity-specific guidance on where to aim.",
+      "suggested_by": "Claude"
+    },
+    "open_question": "Where should a crew member aim a suppressant at a fire in microgravity, especially for a partly hidden or wake-stabilized flame?",
+    "related_cards": [
+      {
+        "card_id": "BAS-003",
+        "relation": "extends"
+      }
+    ],
+    "scores": {
+      "crew_safety": 5,
+      "evidence": 3,
+      "moon_mars": 5
+    },
+    "score_reasons": {
+      "crew_safety": "Crew procedures depend on this.",
+      "evidence": "NASA guide statement based on early BASS work.",
+      "moon_mars": "Exploration fire response."
+    },
+    "source_type": "summary",
+    "status": "draft",
+    "reviewed_by": null,
+    "expert_checked": false,
+    "auto_check": {
+      "quote_found": true,
+      "quote_score": 100.0,
+      "numbers_found": true,
+      "missing_numbers": [],
+      "reasons": []
+    }
+  }
+]

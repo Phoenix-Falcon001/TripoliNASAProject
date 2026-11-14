@@ -1,0 +1,44 @@
+{
+  "FLX-001": {
+    "status": "verified",
+    "reviewed_by": "Claude (auto-checked), accepted by team",
+    "fingerprint": "49fad0aae19d70a1",
+    "decided_at": "2026-11-14T09:30:57+00:00",
+    "note": "Accepted by the team without a line-by-line human read; quote and numbers checked word-for-word against the page text."
+  },
+  "FLX-002": {
+    "status": "verified",
+    "reviewed_by": "Claude (auto-checked), accepted by team",
+    "fingerprint": "8f2550e674caea66",
+    "decided_at": "2026-11-14T09:30:57+00:00",
+    "note": "Accepted by the team without a line-by-line human read; quote and numbers checked word-for-word against the page text."
+  },
+  "FLX-003": {
+    "status": "verified",
+    "reviewed_by": "Claude (auto-checked), accepted by team",
+    "fingerprint": "ec04cac1eb38f9ed",
+    "decided_at": "2026-11-14T09:30:57+00:00",
+    "note": "Accepted by the team without a line-by-line human read; quote and numbers checked word-for-word against the page text."
+  },
+  "FLX-004": {
+    "status": "verified",
+    "reviewed_by": "Claude (auto-checked), accepted by team",
+    "fingerprint": "ae35cbaeba1b709e",
+    "decided_at": "2026-11-14T09:30:57+00:00",
+    "note": "Accepted by the team without a line-by-line human read; quote and numbers checked word-for-word against the page text."
+  },
+  "FLX-005": {
+    "status": "verified",
+    "reviewed_by": "Claude (auto-checked), accepted by team",
+    "fingerprint": "77589a985a3369c4",
+    "decided_at": "2026-11-14T09:30:57+00:00",
+    "note": "Accepted by the team without a line-by-line human read; quote and numbers checked word-for-word against the page text."
+  },
+  "FLX-006": {
+    "status": "verified",
+    "reviewed_by": "Claude (auto-checked), accepted by team",
+    "fingerprint": "6d3a803e365f73d6",
+    "decided_at": "2026-11-14T09:30:57+00:00",
+    "note": "Accepted by the team without a line-by-line human read; quote and numbers checked word-for-word against the page text."
+  }
+}
