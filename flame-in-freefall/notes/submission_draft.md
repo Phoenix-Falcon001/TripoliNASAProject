@@ -49,11 +49,15 @@ Same local model, [[questions]] questions, asked once plain and once with our ca
 - **In building it:** we used Claude (Anthropic) through Claude Code to help write code, tests and documentation, and to draft the evidence cards from the text of the NASA documents. Every card's quote was checked automatically, word for word, against its PDF page, and every number on a card appears on that page. The team accepted the cards on that basis; [[number]] cards were also read by a team member against the PDF (update before submitting, and say "none" if none). The app's trust badges show this for each card.
 
 ## Team
-Bassam (evidence lead), Nermine (app & integration), Rita (AI & evaluation), Kafa (pipeline & data), [[name]] (evidence reviewer, mechanical engineering).
+Bassam Eter (evidence lead), Ibrahim Hajjo (evidence reviewer, mechanical engineering), Nermine Chhhayta (app & integration), Rita Marroun (AI & evaluation), Kafa (pipeline & data).
 
 ---
 
-# Pitch: 2 minutes, 5 slides
+# Pitch: 2 minutes
+
+The up-to-date deck is `notes/Flame_in_Freefall_pitch.pptx` (8 slides, script in the speaker notes). The 30-second video script is `notes/video_script.md`. The outline below is the earlier draft.
+
+## Earlier outline: 5 slides
 
 | # | Slide | Say (≈ 20–25 s each) |
 |---|---|---|
